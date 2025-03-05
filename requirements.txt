@@ -10,3 +10,4 @@ zipp==3.19.2
 flask-wtf
 flask-limiter
 email_validator
+google.generativeai
