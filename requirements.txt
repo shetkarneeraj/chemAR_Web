@@ -11,3 +11,5 @@ flask-wtf
 flask-limiter
 email_validator
 google.generativeai
+google
+google.genai
