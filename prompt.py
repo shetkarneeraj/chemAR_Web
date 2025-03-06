@@ -3,15 +3,20 @@ import json
 import google.generativeai as genai
 import re
 from typing import Optional, Dict
+import base64
+import os
+from google import genai
+from google.genai import types
+
 
 # Set up Gemini
-genai.configure(api_key="AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI")
+# genai.configure(api_key="AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI")
 
 
-def geminiGenerate(prompt):
-    model = genai.GenerativeModel('gemini-1.5-flash')
-    response = model.generate_content(prompt)
-    return response.text
+# def geminiGenerate(prompt):
+#     model = genai.GenerativeModel('gemini-1.5-flash')
+#     response = model.generate_content(prompt)
+#     return response.text
 
 
 def safe_json_extract(response: str) -> Optional[Dict]:
@@ -35,6 +40,106 @@ def safe_json_extract(response: str) -> Optional[Dict]:
         print(f"JSON extraction error: {str(e)}")
         return None
     
+
+def generate(description):
+
+    prompt = '''
+        Analyze this chemical compound description and return structural data in JSON format. Whatever be the strength of data
+        show full representation of the compound in 3D space with all the atoms and bonds. Get all the data do not skip any element.
+        Follow this EXACT structure:
+        {
+        "name": "IUPAC name",
+        "description": "Brief chemical description",
+        "formula": "Molecular formula",
+        "atoms": {
+            "C1": {
+            "element": "C",
+            "atomic_number": 6,
+            "position": [x,y,z],
+            "valence_electrons": 4,
+            "hybridization": "sp3"
+            },
+            "O2": {
+            "element": "O",
+            "atomic_number": 8,
+            "position": [x,y,z],
+            "valence_electrons": 6,
+            "hybridization": "sp2"
+            },
+            ...
+        },
+        "bonds": [
+            {
+            "atom1": "C1",
+            "atom2": "C2",
+            "bond_type": "single|double|triple",
+            "plane": "horizontal|vertical",
+            "angle": radians,
+            "length": angstroms
+            },
+            ...
+        ],
+        "functional_groups": ["carboxylic acid", ...],
+        "molecular_geometry": {
+            "shape": "tetrahedral|trigonal-planar|etc",
+            "bond_angles": [
+            {
+                "atoms": ["C1", "C2", "O1"],
+                "degrees": 120.0
+            },
+            ...
+            ]
+        },
+        "description": "Detailed description of the compound how its synthesized and what are its uses?"
+        }
+
+        Important rules:
+        1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
+        2. Specify exact atom positions in 3D space
+        3. Include bond lengths in angstroms
+        4. List all relevant bond angles
+        5. Add a clear chemical description
+        6. Include all the relevant functional groups
+        8. Show all the elements and their positions
+        9. Do not truncate any data
+        10. Do not return anything other than JSON
+
+        Compound description:
+    '''
+
+    answer = ""
+
+    client = genai.Client(
+        api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
+    )
+
+    model = "gemini-2.0-flash"
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=prompt+description),
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        temperature=1,
+        top_p=0.95,
+        top_k=40,
+        max_output_tokens=8192,
+        response_mime_type="application/json",
+    )
+
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        answer += chunk.text + ""
+
+    return answer
+
+
 # Structured prompt template
 def get_compound_data(description: str) -> dict:
 
@@ -103,15 +208,16 @@ def get_compound_data(description: str) -> dict:
     '''
     
     try:
-        response = geminiGenerate(prompt + description)
+        response = generate(prompt + description)
         json_str = safe_json_extract(response)
-        return json.loads(json_str)
+        return json_str
     except json.JSONDecodeError:
         print("Failed to parse JSON response")
         return None
     except Exception as e:
         print(f"API Error: {str(e)}")
         return None
+    
 
 # Example usage
 if __name__ == "__main__":
