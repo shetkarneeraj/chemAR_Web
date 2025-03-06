@@ -13,6 +13,21 @@ from google.genai import types
 import re
 from typing import Optional, Dict
 
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
+uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+# Create a new client and connect to the server
+client = MongoClient(uri, server_api=ServerApi('1'))
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
+
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -261,9 +276,20 @@ def get_compound_data(description: str) -> dict:
 @app.route('/api/model', methods=['POST'])
 def model():
     prompt = request.json
-    response = get_compound_data(prompt["text"])
-    print(response)
-    return response
+    if prompt["code"] == "chemar2602":
+        response = get_compound_data(prompt["text"])
+        
+        # Save prompt and response to MongoDB
+        db = client['chemar']
+        collection = db['chemar']
+        document = {
+            "prompt": prompt["text"],
+            "response": response
+        }
+        collection.insert_one(document)
+        return response
+    else:
+        return "Invalid code"
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)

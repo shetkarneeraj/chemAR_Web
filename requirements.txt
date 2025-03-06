@@ -13,3 +13,4 @@ email_validator
 google.generativeai
 google
 google.genai
+pymongo
