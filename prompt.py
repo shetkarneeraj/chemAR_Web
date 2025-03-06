@@ -46,10 +46,12 @@ def generate(description):
     prompt = '''
         Analyze this chemical compound description and return structural data in JSON format. Whatever be the strength of data
         show full representation of the compound in 3D space with all the atoms and bonds. Get all the data do not skip any element.
+        Think over the resources and find correct data.
         Follow this EXACT structure:
         {
         "name": "IUPAC name",
-        "description": "Brief chemical description",
+        "properties": "Brief chemical description",
+        "description": "Detailed description of the compound how its synthesized and what are its uses?",
         "formula": "Molecular formula",
         "atoms": {
             "C1": {
@@ -89,22 +91,20 @@ def generate(description):
             },
             ...
             ]
-        },
-        "description": "Detailed description of the compound how its synthesized and what are its uses?"
+        }
         }
 
         Important rules:
         1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
-        2. Specify exact atom positions in 3D space
-        3. Include bond lengths in angstroms
-        4. List all relevant bond angles
+        2. Positional co-ordinates be in range 0 to 0.75
+        4. List all relevant bonds and bond angles
         5. Add a clear chemical description
         6. Include all the relevant functional groups
         8. Show all the elements and their positions
         9. Do not truncate any data
         10. Do not return anything other than JSON
 
-        Compound description:
+        Provided desription: 
     '''
 
     answer = ""
@@ -113,7 +113,7 @@ def generate(description):
         api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
     )
 
-    model = "gemini-2.0-flash"
+    model = "gemini-2.0-flash-lite"
     contents = [
         types.Content(
             role="user",
@@ -123,10 +123,10 @@ def generate(description):
         ),
     ]
     generate_content_config = types.GenerateContentConfig(
-        temperature=1,
+        temperature=1.5,
         top_p=0.95,
         top_k=40,
-        max_output_tokens=8192,
+        max_output_tokens=16834,
         response_mime_type="application/json",
     )
 
@@ -221,5 +221,5 @@ def get_compound_data(description: str) -> dict:
 
 # Example usage
 if __name__ == "__main__":
-    compound_info = get_compound_data("Sugar")
+    compound_info = get_compound_data("Which acid is there in youghurt?")
     print(compound_info)

@@ -146,9 +146,10 @@ def safe_json_extract(response: str) -> Optional[Dict]:
 def generate(description):
 
     prompt = '''
-        Analyze this chemical compound description and return structural data in JSON format. Whatever be the strength of data
-        show full representation of the compound in 3D space with all the atoms and bonds. Get all the data do not skip any element.
-        Think over the resources and find correct data.
+        Analyze this chemical compound description and return clear simple and understandable structural representation of data in JSON format.
+        Whatever be the length of data show full representation of the compound in 3D space with all the atoms and bonds. Compute positions properly
+        such that each element is visible and understandble.
+        Get all the data and do not skip any element. Think over the resources and find correct data.
         Follow this EXACT structure:
         {
         "name": "IUPAC name",
@@ -198,7 +199,7 @@ def generate(description):
 
         Important rules:
         1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
-        2. Positional co-ordinates be in range 0 to 0.75
+        2. Positional co-ordinates be scaled to range 0 to 0.65
         4. List all relevant bonds and bond angles
         5. Add a clear chemical description
         6. Include all the relevant functional groups
@@ -225,7 +226,7 @@ def generate(description):
         ),
     ]
     generate_content_config = types.GenerateContentConfig(
-        temperature=1.5,
+        temperature=2.0,
         top_p=0.95,
         top_k=40,
         max_output_tokens=16834,

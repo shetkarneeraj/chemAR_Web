@@ -386,86 +386,83 @@
   </section>
 
 
-  <div id="privacy-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay">
-    <div class="bg-gray-900 rounded-lg max-w-3xl w-full p-8 relative overflow-y-auto max-h-screen shadow-xl">
-      <!-- Close Button -->
-      <button id="privacy-modal-close" class="absolute top-4 right-4 text-gray-300 hover:text-indigo-400 text-2xl">&times;</button>
-      <div class="text-center">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600">Privacy Policy</h2>
-        <p class="mt-2 text-3xl font-bold tracking-tight text-white">chemAR Privacy Policy</p>
-      </div>
-      <div class="mt-10 space-y-8 text-gray-300 text-lg">
-        <p>
-          This Privacy Policy describes how chemAR ("the App", "we", "our") handles data and protects your privacy.
-          By using chemAR, you agree to the practices described in this policy.
-        </p>
-        <h3 class="text-xl font-semibold text-white">No Data Collection</h3>
-        <p>
-          The chemAR application does not collect any personal or usage information. We do not track your activities,
-          and no data is transmitted to our servers. All content and molecular models are stored locally on your device.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Local Storage of Molecular Models</h3>
-        <p>
-          All molecular models provided within chemAR are stored directly on your device. This means that any information related to
-          the chemistry content remains on your device only and is not uploaded or shared with any external servers.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Educational Purpose Only</h3>
-        <p>
-          chemAR is developed exclusively for educational purposes. The augmented reality experience, interactive content, and
-          molecular visualizations are intended solely to assist in learning and understanding chemistry concepts. Any other use
-          of the App or its content is neither intended nor supported.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Open Source Data</h3>
-        <p>
-          The data used to represent chemical elements and molecular structures is sourced from reputable open data repositories.
-          We have taken reasonable measures to ensure the accuracy of the data; however, we encourage users to verify any critical
-          information independently.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Data Corrections and Feedback</h3>
-        <p>
-          If you notice any inaccuracies or have suggestions for improvement regarding the data presented in chemAR, please let us know.
-          You can contact the developers at 
-          <a href="mailto:shetkarneeraj@icloud.com" class="text-indigo-400 hover:underline">shetkarneeraj@icloud.com</a>.
-          Your feedback is invaluable in ensuring the quality and reliability of our educational content.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Camera Permissions and AR Functionality</h3>
-        <p>
-          In order to provide an immersive augmented reality experience, chemAR requires access to your device’s camera. Please note that:
-        </p>
-        <ul class="list-disc ml-8">
-          <li>
-            The camera is used exclusively to align and render AR elements for the educational content.
-          </li>
-          <li>
-            The App does not capture, record, or store any photos or videos from your device.
-          </li>
-          <li>
-            No images or video data is saved on developer servers or transferred to any external storage.
-          </li>
-        </ul>
-        <h3 class="text-xl font-semibold text-white">No Storage on Developer Servers</h3>
-        <p>
-          We have designed chemAR with your privacy in mind. No data, including that from the camera, is stored on our servers.
-          Everything necessary for the AR functionality is handled locally on your device.
-        </p>
-        <h3 class="text-xl font-semibold text-white">No Payments or In-App Purchases</h3>
-        <p>
-          chemAR is completely free to use. There are no charges for installing the app or for any of its components. Additionally, there are no in-app purchases required to access any features or content within the app.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Policy Updates</h3>
-        <p>
-          We may update this Privacy Policy from time to time in response to new legal, technical, or business developments.
-          Any changes will be posted within the App, and we encourage you to review the policy periodically.
-        </p>
-        <h3 class="text-xl font-semibold text-white">Contact Information</h3>
-        <p>
-          If you have any questions or concerns regarding this Privacy Policy or our data practices, please contact us at 
-          <a href="mailto:shetkarneeraj@icloud.com" class="text-indigo-400 hover:underline">shetkarneeraj@icloud.com</a>.
-        </p>
-        <a href="https://www.flaticon.com/free-icons" title="chemistry icons">Icons by Freepik - Flaticon</a>
-      </div>
+<div id="privacy-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay bg-black bg-opacity-50 backdrop-blur-sm">
+  <div class="bg-gray-900 rounded-lg max-w-3xl w-full p-8 relative overflow-y-auto max-h-screen shadow-2xl border border-gray-700">
+    <!-- Close Button -->
+    <button id="privacy-modal-close" class="absolute top-4 right-4 text-gray-300 hover:text-indigo-400 text-2xl transition-transform transform hover:scale-110">&times;</button>
+    <div class="text-center">
+      <h2 class="text-base font-semibold leading-7 text-indigo-500 uppercase tracking-wide">Privacy Policy</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-white">chemAR Privacy Policy</p>
+    </div>
+    <div class="mt-10 space-y-8 text-gray-300 text-lg">
+      <p>
+        This Privacy Policy describes how chemAR ("the App", "we", "our") handles data and protects your privacy.
+        By using chemAR, you agree to the practices described in this policy.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white border-b border-gray-700 pb-2">Data Collection & Usage</h3>
+      <p>
+        chemAR processes and stores data sent via the description fields anonymously. This data is collected to monitor
+        the outputs generated by the LLM models and improve their performance. The prompts sent via the Lab menu, along
+        with the answers generated by the AI model, are securely stored in our database.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">LLM Model & AI Outputs</h3>
+      <p>
+        chemAR utilizes the Gemini 2.0 Flash Lite LLM model to generate AI-driven responses. Users are advised that AI-generated answers
+        may not always be accurate, and discretion is advised. The stored data is used solely for research purposes and not for any
+        commercial or marketing activities.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">User Caution & Confidentiality</h3>
+      <p>
+        Users are strongly advised not to enter any confidential, sensitive, or personally identifiable information in any
+        text fields within the app. The data stored is anonymized and only used for improving AI capabilities.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white border-b border-gray-700 pb-2">No Personal Data Collection</h3>
+      <p>
+        chemAR does not collect personal information or track user activities. All content, molecular models, and AR interactions
+        are stored locally on your device.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">Camera Permissions & AR Functionality</h3>
+      <p>
+        To provide an immersive augmented reality experience, chemAR requires access to your device’s camera. The camera is used only for
+        aligning and rendering AR elements, and no images or videos are captured, stored, or transmitted externally.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">Educational Purpose Only</h3>
+      <p>
+        chemAR is designed exclusively for educational purposes. The app’s interactive molecular visualizations and augmented reality
+        experiences are intended to support chemistry learning and comprehension.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">Open Source Data</h3>
+      <p>
+        The data for chemical elements and molecular structures is sourced from reputable open data repositories. While we strive for
+        accuracy, users are encouraged to verify any critical information independently.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">Policy Updates</h3>
+      <p>
+        We may update this Privacy Policy periodically in response to legal, technical, or business developments. Changes will be
+        posted within the app, and users are encouraged to review the policy regularly.
+      </p>
+      
+      <h3 class="text-xl font-semibold text-white">Contact Information</h3>
+      <p>
+        For questions or feedback, contact us at 
+        <a href="mailto:shetkarneeraj@icloud.com" class="text-indigo-400 hover:underline">shetkarneeraj@icloud.com</a>.
+      </p>
+      
+      <p class="text-gray-500 text-sm">
+        <a href="https://www.flaticon.com/free-icons" title="chemistry icons" class="hover:underline">Icons by Freepik - Flaticon</a>
+      </p>
     </div>
   </div>
+</div>
+
 
 
 
