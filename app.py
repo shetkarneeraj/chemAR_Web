@@ -124,7 +124,7 @@ def home():
 
 
 def geminiGenerate(prompt):
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     response = model.generate_content(prompt)
     return response.text
 
@@ -153,8 +153,8 @@ def safe_json_extract(response: str) -> Optional[Dict]:
 def get_compound_data(description: str) -> dict:
 
     prompt = '''
-        Analyze this chemical compound description and return structural data in JSON format. Whatever be the strength of data
-        show full representation of the compound in 3D space with all the atoms and bonds. Get all the data do not skip any element.
+        Analyze this chemical compound description and return structural data in JSON format. Show full representation of the compound in
+        with all the atoms and bonds. Get all the data do not skip any element. Do not hallucinate any data.
         Follow this EXACT structure:
         {
         "name": "IUPAC name",
@@ -231,7 +231,9 @@ def get_compound_data(description: str) -> dict:
 @app.route('/api/model', methods=['POST'])
 def model():
     prompt = request.json
+    print(prompt)
     response = get_compound_data(prompt["text"])
+    print(response)
     return response
 
 if __name__ == '__main__':
