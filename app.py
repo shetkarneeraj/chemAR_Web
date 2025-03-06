@@ -213,7 +213,7 @@ def generate(description):
         api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
     )
 
-    model = "gemini-2.0-flash"
+    model = "gemini-2.0-flash-lite"
     contents = [
         types.Content(
             role="user",
@@ -223,10 +223,10 @@ def generate(description):
         ),
     ]
     generate_content_config = types.GenerateContentConfig(
-        temperature=1,
+        temperature=1.5,
         top_p=0.95,
         top_k=40,
-        max_output_tokens=8192,
+        max_output_tokens=16834,
         response_mime_type="application/json",
     )
 
