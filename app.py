@@ -231,7 +231,7 @@ def generate(description):
         api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
     )
 
-    model = "gemini-2.0-flash-lite"
+    model = "gemini-2.0-pro-exp-02-05"
     contents = [
         types.Content(
             role="user",
