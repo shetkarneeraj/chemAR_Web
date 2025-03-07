@@ -17,10 +17,11 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
 import io
+from sentence_transformers import SentenceTransformer
 from transformers import AutoTokenizer, AutoModel
 
 # Initialize embedding model (choose one)
-embedding_model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Setup MongoDB
 
@@ -216,7 +217,7 @@ def contact():
 
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html', form=ContactForm())
 
 
@@ -395,13 +396,13 @@ def model():
         response = get_compound_data(prompt["text"])
         
         # Save prompt and response to MongoDB
-        # db = client['chemar']
-        # collection = db['chemar']
-        # document = {
-        #     "prompt": prompt["text"],
-        #     "response": response
-        # }
-        # collection.insert_one(document)
+        db = client['chemar']
+        collection = db['chemar']
+        document = {
+            "prompt": prompt["text"],
+            "response": response
+        }
+        collection.insert_one(document)
         print(response)
         return response
     else:
