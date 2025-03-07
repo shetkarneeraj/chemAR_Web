@@ -9,16 +9,6 @@ from google import genai
 from google.genai import types
 
 
-# Set up Gemini
-# genai.configure(api_key="AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI")
-
-
-# def geminiGenerate(prompt):
-#     model = genai.GenerativeModel('gemini-1.5-flash')
-#     response = model.generate_content(prompt)
-#     return response.text
-
-
 def safe_json_extract(response: str) -> Optional[Dict]:
     """Robust JSON extraction with parsing"""
     try:

@@ -15,3 +15,5 @@ google
 google.genai
 pymongo
 pycryptodome
+sentence_transformers
+PyPDF2

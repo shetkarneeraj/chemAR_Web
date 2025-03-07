@@ -12,26 +12,115 @@ from google import genai
 from google.genai import types
 import re
 from typing import Optional, Dict
+from PyPDF2 import PdfReader
+from sentence_transformers import SentenceTransformer
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import os
+import io
+
+# Initialize embedding model (choose one)
+def get_embedding_model():
+    return SentenceTransformer('all-MiniLM-L6-v2')  # 384-dimensional embeddings
+
+# Setup MongoDB
 
 uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
+db = client[os.getenv("DB_NAME", "chemar")]
 
-# Send a ping to confirm a successful connection
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(e)
 
+# Create search indexes (run once)
+def create_indexes():
+    collection = db["docs"]
+
+    # Text search index
+    collection.create_index([("text", "text")])
+    
+    # Vector search index
+    collection.create_index(
+        [("embedding", "vector")],
+        name="compound_vectors",
+        vectorOptions={
+            "type": "knnVector",
+            "dimensions": 384,  # Match MiniLM-L6 dimensions
+            "similarity": "cosine"
+        }
+    )
+
+
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
 limiter = Limiter(get_remote_address, app=app, default_limits=["5 per minute"])  # Limit to 5 requests per minute
+
+
+# PDF Processing with local embeddings
+@app.route('/api/process_pdf', methods=['POST'])
+def process_pdf():
+    if 'file' not in request.files:
+        return "No file part", 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return "No selected file", 400
+
+    if file and file.filename.endswith('.pdf'):
+        try:
+            # Read the file in memory
+            pdf_bytes = file.read()
+            reader = PdfReader(io.BytesIO(pdf_bytes))
+            text = " ".join([page.extract_text() for page in reader.pages])
+            
+            # Process and index the PDF content
+            success = process_and_index_pdf(text)
+            if success:
+                return "PDF processed and indexed successfully", 200
+            else:
+                return "Error processing PDF", 500
+        except Exception as e:
+            print(f"Error processing PDF: {e}")
+            return "Error processing PDF", 500
+    else:
+        return "Invalid file type", 400
+
+
+def process_and_index_pdf(text, chunk_size=1000):
+    try:
+        collection = db["docs"]
+        # Load embedding model
+        embedding_model = get_embedding_model()
+        
+        # Clean and chunk text
+        text = re.sub(r'\s+', ' ', text).strip()
+        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        
+        # Create documents with embeddings
+        documents = []
+        for idx, chunk in enumerate(chunks):
+            embedding = embedding_model.encode(chunk).tolist()
+            documents.append({
+                "text": chunk,
+                "embedding": embedding,
+                "chunk_number": idx,
+                "source": "in-memory"
+            })
+        
+        collection.insert_many(documents)
+        return True
+        
+    except Exception as e:
+        print(f"PDF processing error: {e}")
+        return False
+
 
 # Contact form class
 class ContactForm(FlaskForm):
@@ -134,6 +223,39 @@ def contact():
 @app.route('/')
 def home():
     return render_template('index.html', form=ContactForm())
+
+
+# PDF Processing with local embeddings
+def process_and_index_pdf(pdf_path, chunk_size=1000):
+    try:
+        # Load embedding model
+        embedding_model = get_embedding_model()
+        
+        # Extract text
+        reader = PdfReader(pdf_path)
+        text = " ".join([page.extract_text() for page in reader.pages])
+        
+        # Clean and chunk text
+        text = re.sub(r'\s+', ' ', text).strip()
+        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        
+        # Create documents with embeddings
+        documents = []
+        for idx, chunk in enumerate(chunks):
+            embedding = embedding_model.encode(chunk).tolist()
+            documents.append({
+                "text": chunk,
+                "embedding": embedding,
+                "chunk_number": idx,
+                "source": pdf_path
+            })
+        
+        collection.insert_many(documents)
+        return True
+        
+    except Exception as e:
+        print(f"PDF processing error: {e}")
+        return False
 
 
 def safe_json_extract(response: str) -> Optional[Dict]:
@@ -291,5 +413,7 @@ def model():
     else:
         return "Invalid code"
 
+
 if __name__ == '__main__':
+    create_indexes()
     app.run(debug=True, use_reloader=True)
