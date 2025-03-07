@@ -22,7 +22,7 @@ import io
 
 # Initialize embedding model (choose one)
 def get_embedding_model():
-    return SentenceTransformer('all-MiniLM-L6-v2')  # 384-dimensional embeddings
+    return SentenceTransformer('all-MiniLM-L6-v1')
 
 # Setup MongoDB
 
@@ -31,7 +31,7 @@ uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client[os.getenv("DB_NAME", "chemar")]
-
+s
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
