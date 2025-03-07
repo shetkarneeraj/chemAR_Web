@@ -6,11 +6,10 @@ from sentence_transformers import SentenceTransformer
 from google import genai
 from google.genai import types
 import json
-import certifi
+from transformers import AutoTokenizer, AutoModel
 
-# Initialize embedding model (choose one)
-def get_embedding_model():
-    return SentenceTransformer('all-MiniLM-L6-v2')  # 384-dimensional embeddings
+tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+embedding_model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 
 # Initialize MongoDB
 uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -35,13 +34,9 @@ def create_indexes():
         }
     )
 
-
 # PDF Processing with local embeddings
 def process_and_index_pdf(pdf_path, chunk_size=1000):
     try:
-        # Load embedding model
-        embedding_model = get_embedding_model()
-        
         # Extract text
         reader = PdfReader(pdf_path)
         text = " ".join([page.extract_text() for page in reader.pages])

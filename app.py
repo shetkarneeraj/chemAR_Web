@@ -19,10 +19,11 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
 import io
+from transformers import AutoTokenizer, AutoModel
 
 # Initialize embedding model (choose one)
-def get_embedding_model():
-    return SentenceTransformer('all-MiniLM-L6-v1')
+tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
+embedding_model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 
 # Setup MongoDB
 
@@ -31,7 +32,7 @@ uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client[os.getenv("DB_NAME", "chemar")]
-s
+
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -96,9 +97,6 @@ def process_pdf():
 def process_and_index_pdf(text, chunk_size=1000):
     try:
         collection = db["docs"]
-        # Load embedding model
-        embedding_model = get_embedding_model()
-        
         # Clean and chunk text
         text = re.sub(r'\s+', ' ', text).strip()
         chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
