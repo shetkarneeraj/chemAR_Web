@@ -16,4 +16,4 @@ google.genai
 pymongo
 PyPDF2
 transformers
-SentenceTransformers
+sentence-transformers
