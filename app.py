@@ -415,5 +415,5 @@ def model():
 
 
 if __name__ == '__main__':
-    create_indexes()
+    # create_indexes()
     app.run(debug=True, use_reloader=True)
