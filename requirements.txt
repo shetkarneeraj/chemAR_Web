@@ -1,12 +1,12 @@
-blinker==1.8.2
-click==8.1.7
-Flask==3.0.3
-importlib_metadata==8.2.0
-itsdangerous==2.2.0
-Jinja2==3.1.4
-MarkupSafe==2.1.5
-Werkzeug==3.0.3
-zipp==3.19.2
+blinker
+click
+Flask
+importlib_metadata
+itsdangerous
+Jinja2
+MarkupSafe
+Werkzeug
+zipp
 flask-wtf
 flask-limiter
 email_validator
@@ -16,3 +16,4 @@ google.genai
 pymongo
 PyPDF2
 transformers
+SentenceTransformers

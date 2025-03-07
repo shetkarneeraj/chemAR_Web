@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/6bb7cbf5-bd21-4121-9d5e-92aaf3d45ae9/resourceGroups/21f1006328_rg_3299/providers/Microsoft.Web/sites/ambitious-pebble-0061b6e4e1f145288b345b5e574f53c3",
+    "appService.deploySubpath": "."
+}
