@@ -13,8 +13,6 @@ from google.genai import types
 import re
 from typing import Optional, Dict
 from PyPDF2 import PdfReader
-from sentence_transformers import SentenceTransformer
-
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
@@ -22,7 +20,6 @@ import io
 from transformers import AutoTokenizer, AutoModel
 
 # Initialize embedding model (choose one)
-tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 embedding_model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 
 # Setup MongoDB
@@ -96,7 +93,7 @@ def process_pdf():
 
 def process_and_index_pdf(text, chunk_size=1000):
     try:
-        collection = db["docs"]
+        # collection = db["docs"]
         # Clean and chunk text
         text = re.sub(r'\s+', ' ', text).strip()
         chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
@@ -111,8 +108,8 @@ def process_and_index_pdf(text, chunk_size=1000):
                 "chunk_number": idx,
                 "source": "in-memory"
             })
-        
-        collection.insert_many(documents)
+        print(documents)
+        # collection.insert_many(documents)
         return True
         
     except Exception as e:
@@ -226,9 +223,7 @@ def home():
 # PDF Processing with local embeddings
 def process_and_index_pdf(pdf_path, chunk_size=1000):
     try:
-        # Load embedding model
-        embedding_model = get_embedding_model()
-        
+        # collection = db["docs"]
         # Extract text
         reader = PdfReader(pdf_path)
         text = " ".join([page.extract_text() for page in reader.pages])
@@ -247,8 +242,8 @@ def process_and_index_pdf(pdf_path, chunk_size=1000):
                 "chunk_number": idx,
                 "source": pdf_path
             })
-        
-        collection.insert_many(documents)
+        print(documents)
+        # collection.insert_many(documents)
         return True
         
     except Exception as e:
@@ -400,13 +395,14 @@ def model():
         response = get_compound_data(prompt["text"])
         
         # Save prompt and response to MongoDB
-        db = client['chemar']
-        collection = db['chemar']
-        document = {
-            "prompt": prompt["text"],
-            "response": response
-        }
-        collection.insert_one(document)
+        # db = client['chemar']
+        # collection = db['chemar']
+        # document = {
+        #     "prompt": prompt["text"],
+        #     "response": response
+        # }
+        # collection.insert_one(document)
+        print(response)
         return response
     else:
         return "Invalid code"
