@@ -43,19 +43,18 @@ def process_and_index_pdf(text, chunk_size=1000):
         collection = db["docs"]
         text = re.sub(r'\s+', ' ', text).strip()
         chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
-        documents = []
         upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         model = get_embedding_model()
         for idx, chunk in enumerate(chunks):
             embedding = model.encode(chunk).tolist()
-            documents.append({
+            collection.insert_one({
                 "text": chunk,
                 "embedding": embedding,
                 "chunk_number": idx,
                 "source": "uploaded_pdf",
                 "upload_id": upload_id
             })
-        collection.insert_many(documents)
+            print(f"Processed chunk {idx}")
         return True
     except Exception as e:
         print(f"PDF processing error: {e}")
