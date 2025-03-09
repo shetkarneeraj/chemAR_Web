@@ -31,66 +31,66 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client["chemar"]
 
 # Initialize embedding model (choose one)
-# embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
-# def process_and_index_pdf(text, chunk_size=1000):
-#     collection = db["docs"]
-#     text = re.sub(r'\s+', ' ', text).strip()
-#     chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
-#     documents = []
-#     upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-#     for idx, chunk in enumerate(chunks):
-#         embedding = embedding_model.encode(chunk).tolist()
-#         documents.append({
-#             "text": chunk,
-#             "embedding": embedding,
-#             "chunk_number": idx,
-#             "source": "uploaded_pdf",
-#             "upload_id": upload_id
-#         })
-#     collection.insert_many(documents)
-#     return True
+def process_and_index_pdf(text, chunk_size=1000):
+    collection = db["docs"]
+    text = re.sub(r'\s+', ' ', text).strip()
+    chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+    documents = []
+    upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    for idx, chunk in enumerate(chunks):
+        embedding = embedding_model.encode(chunk).tolist()
+        documents.append({
+            "text": chunk,
+            "embedding": embedding,
+            "chunk_number": idx,
+            "source": "uploaded_pdf",
+            "upload_id": upload_id
+        })
+    collection.insert_many(documents)
+    return True
     
-# # Create search indexes (run once)
-# def create_indexes():
-#     collection = db["docs"]
-#     collection.create_index([("text", "text")])
-#     collection.create_index(
-#         [("embedding", "vector")],
-#         name="compound_vectors",
-#         vectorOptions={
-#             "type": "knnVector",
-#             "dimensions": 384,  # Match MiniLM-L6 dimensions
-#             "similarity": "cosine"
-#         }
-#     )
+# Create search indexes (run once)
+def create_indexes():
+    collection = db["docs"]
+    collection.create_index([("text", "text")])
+    collection.create_index(
+        [("embedding", "vector")],
+        name="compound_vectors",
+        vectorOptions={
+            "type": "knnVector",
+            "dimensions": 384,  # Match MiniLM-L6 dimensions
+            "similarity": "cosine"
+        }
+    )
 
 
-# @app.route('/upload', methods=['GET', 'POST'])
-# def upload():
-#     if request.method == 'POST':
-#         if 'file' not in request.files:
-#             flash('No file part', 'error')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         if file.filename == '':
-#             flash('No selected file', 'error')
-#             return redirect(request.url)
-#         if file and file.filename.endswith('.pdf'):
-#             try:
-#                 pdf_bytes = file.read()
-#                 reader = PdfReader(io.BytesIO(pdf_bytes))
-#                 text = " ".join([page.extract_text() for page in reader.pages])
-#                 if process_and_index_pdf(text):
-#                     flash('PDF uploaded and processed successfully', 'success')
-#                 else:
-#                     flash('Error processing PDF', 'error')
-#             except Exception as e:
-#                 flash(f'Error: {str(e)}', 'error')
-#         else:
-#             flash('Invalid file type. Please upload a PDF.', 'error')
-#         return redirect(request.url)
-#     return render_template('upload.html')
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+        if file and file.filename.endswith('.pdf'):
+            try:
+                pdf_bytes = file.read()
+                reader = PdfReader(io.BytesIO(pdf_bytes))
+                text = " ".join([page.extract_text() for page in reader.pages])
+                if process_and_index_pdf(text):
+                    flash('PDF uploaded and processed successfully', 'success')
+                else:
+                    flash('Error processing PDF', 'error')
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'error')
+        else:
+            flash('Invalid file type. Please upload a PDF.', 'error')
+        return redirect(request.url)
+    return render_template('upload.html')
 
 
 # Contact form class
@@ -196,190 +196,190 @@ def index():
     return render_template('index.html', form=ContactForm())
 
 
-# def safe_json_extract(response: str) -> Optional[Dict]:
-#     """Robust JSON extraction with parsing"""
-#     try:
-#         # Try to find JSON between ``` markers
-#         json_match = re.search(r'```json(.*?)```', response, re.DOTALL) or re.search(r'```(.*?)```', response, re.DOTALL)
+def safe_json_extract(response: str) -> Optional[Dict]:
+    """Robust JSON extraction with parsing"""
+    try:
+        # Try to find JSON between ``` markers
+        json_match = re.search(r'```json(.*?)```', response, re.DOTALL) or re.search(r'```(.*?)```', response, re.DOTALL)
         
-#         if json_match:
-#             json_str = json_match.group(1).strip()
-#         else:
-#             # Fallback to finding first complete JSON object
-#             json_str = response[response.find('{'):response.rfind('}')+1]
+        if json_match:
+            json_str = json_match.group(1).strip()
+        else:
+            # Fallback to finding first complete JSON object
+            json_str = response[response.find('{'):response.rfind('}')+1]
 
-#         # Clean JSON string
-#         json_str = json_str.replace('\\"', '"')
-#         json_str = re.sub(r',\s*([}\]])', r'\1', json_str)
-#         return json_str
+        # Clean JSON string
+        json_str = json_str.replace('\\"', '"')
+        json_str = re.sub(r',\s*([}\]])', r'\1', json_str)
+        return json_str
     
-#     except (AttributeError, json.JSONDecodeError, KeyError) as e:
-#         print(f"JSON extraction error: {str(e)}")
-#         return None
+    except (AttributeError, json.JSONDecodeError, KeyError) as e:
+        print(f"JSON extraction error: {str(e)}")
+        return None
     
 
-# def generate(description):
-#     query_embedding = embedding_model.encode(description).tolist()
-#     collection = db["docs"]
-#     pipeline = [
-#         {
-#             "$search": {
-#                 "index": "your_vector_search_index",  # Replace with your vector search index name
-#                 "knnBeta": {
-#                     "vector": query_embedding,        # Query embedding
-#                     "path": "embedding",              # Field where embeddings are stored
-#                     "k": 5                            # Number of top similar documents to retrieve
-#                 }
-#             }
-#         },
-#         {
-#             "$project": {
-#                 "text": 1,                            # Field with relevant content
-#                 "score": {"$meta": "searchScore"}     # Similarity score
-#             }
-#         }
-#     ]
-#     similar_docs = list(collection.aggregate(pipeline))
+def generate(description):
+    query_embedding = embedding_model.encode(description).tolist()
+    collection = db["docs"]
+    pipeline = [
+        {
+            "$search": {
+                "index": "your_vector_search_index",  # Replace with your vector search index name
+                "knnBeta": {
+                    "vector": query_embedding,        # Query embedding
+                    "path": "embedding",              # Field where embeddings are stored
+                    "k": 5                            # Number of top similar documents to retrieve
+                }
+            }
+        },
+        {
+            "$project": {
+                "text": 1,                            # Field with relevant content
+                "score": {"$meta": "searchScore"}     # Similarity score
+            }
+        }
+    ]
+    similar_docs = list(collection.aggregate(pipeline))
 
-#     context = ""
-#     for doc in similar_docs:
-#         context += f"Similar Document: {doc['text']}\nSimilarity Score: {doc['score']}\n\n"
+    context = ""
+    for doc in similar_docs:
+        context += f"Similar Document: {doc['text']}\nSimilarity Score: {doc['score']}\n\n"
     
-#     # Step 4: Construct the prompt with MongoDB context
-#     prompt = f'''
-#         Analyze this chemical compound description and return clear simple and understandable structural representation of data in JSON format.
-#         Whatever be the length of data show full representation of the compound in 3D space with all the atoms and bonds. Compute positions properly
-#         such that each element is visible and understandable.
-#         Get all the data and do not skip any element. Think over the resources and find correct data.
+    # Step 4: Construct the prompt with MongoDB context
+    prompt = f'''
+        Analyze this chemical compound description and return clear simple and understandable structural representation of data in JSON format.
+        Whatever be the length of data show full representation of the compound in 3D space with all the atoms and bonds. Compute positions properly
+        such that each element is visible and understandable.
+        Get all the data and do not skip any element. Think over the resources and find correct data.
         
-#         Context from database:
-#         {context}
+        Context from database:
+        {context}
         
-#         Follow this EXACT structure:
-#         {{
-#         "name": "IUPAC name",
-#         "properties": "Brief chemical description",
-#         "description": "Detailed description of the compound how its synthesized and what are its uses?",
-#         "formula": "Molecular formula",
-#         "atoms": {{
-#             "C1": {{
-#             "element": "C",
-#             "atomic_number": 6,
-#             "position": [x,y,z],
-#             "valence_electrons": 4,
-#             "hybridization": "sp3"
-#             }},
-#             "O2": {{
-#             "element": "O",
-#             "atomic_number": 8,
-#             "position": [x,y,z],
-#             "valence_electrons": 6,
-#             "hybridization": "sp2"
-#             }},
-#             ...
-#         }},
-#         "bonds": [
-#             {{
-#             "atom1": "C1",
-#             "atom2": "C2",
-#             "bond_type": "single|double|triple",
-#             "plane": "horizontal|vertical",
-#             "angle": radians,
-#             "length": angstroms
-#             }},
-#             ...
-#         ],
-#         "functional_groups": ["carboxylic acid", ...],
-#         "molecular_geometry": {{
-#             "shape": "tetrahedral|trigonal-planar|etc",
-#             "bond_angles": [
-#             {{
-#                 "atoms": ["C1", "C2", "O1"],
-#                 "degrees": 120.0
-#             }},
-#             ...
-#             ]
-#         }}
-#         }}
+        Follow this EXACT structure:
+        {{
+        "name": "IUPAC name",
+        "properties": "Brief chemical description",
+        "description": "Detailed description of the compound how its synthesized and what are its uses?",
+        "formula": "Molecular formula",
+        "atoms": {{
+            "C1": {{
+            "element": "C",
+            "atomic_number": 6,
+            "position": [x,y,z],
+            "valence_electrons": 4,
+            "hybridization": "sp3"
+            }},
+            "O2": {{
+            "element": "O",
+            "atomic_number": 8,
+            "position": [x,y,z],
+            "valence_electrons": 6,
+            "hybridization": "sp2"
+            }},
+            ...
+        }},
+        "bonds": [
+            {{
+            "atom1": "C1",
+            "atom2": "C2",
+            "bond_type": "single|double|triple",
+            "plane": "horizontal|vertical",
+            "angle": radians,
+            "length": angstroms
+            }},
+            ...
+        ],
+        "functional_groups": ["carboxylic acid", ...],
+        "molecular_geometry": {{
+            "shape": "tetrahedral|trigonal-planar|etc",
+            "bond_angles": [
+            {{
+                "atoms": ["C1", "C2", "O1"],
+                "degrees": 120.0
+            }},
+            ...
+            ]
+        }}
+        }}
 
-#         Important rules:
-#         1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
-#         2. Positional coordinates be scaled to range 0 to 0.65
-#         4. List all relevant bonds and bond angles
-#         5. Add a clear chemical description
-#         6. Include all the relevant functional groups
-#         8. Show all the elements and their positions
-#         9. Do not truncate any data
-#         10. Do not return anything other than JSON
+        Important rules:
+        1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
+        2. Positional coordinates be scaled to range 0 to 0.65
+        4. List all relevant bonds and bond angles
+        5. Add a clear chemical description
+        6. Include all the relevant functional groups
+        8. Show all the elements and their positions
+        9. Do not truncate any data
+        10. Do not return anything other than JSON
 
-#         Provided description: {description}
-#     '''
+        Provided description: {description}
+    '''
 
-#     answer = ""
+    answer = ""
 
-#     # Step 5: Interact with the Gemini API (unchanged)
-#     client = genai.Client(
-#         api_key="AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
-#     )
+    # Step 5: Interact with the Gemini API (unchanged)
+    client = genai.Client(
+        api_key="AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
+    )
 
-#     model = "gemini-2.0-flash-lite"
-#     contents = [
-#         types.Content(
-#             role="user",
-#             parts=[
-#                 types.Part.from_text(text=prompt),
-#             ],
-#         ),
-#     ]
-#     generate_content_config = types.GenerateContentConfig(
-#         temperature=2.0,
-#         top_p=0.95,
-#         top_k=40,
-#         max_output_tokens=16834,
-#         response_mime_type="application/json",
-#     )
+    model = "gemini-2.0-flash-lite"
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=prompt),
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        temperature=2.0,
+        top_p=0.95,
+        top_k=40,
+        max_output_tokens=16834,
+        response_mime_type="application/json",
+    )
 
-#     for chunk in client.models.generate_content_stream(
-#         model=model,
-#         contents=contents,
-#         config=generate_content_config,
-#     ):
-#         answer += chunk.text + ""
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        answer += chunk.text + ""
 
-#     return answer
-# # Structured prompt template
-# def get_compound_data(description: str) -> dict:
+    return answer
+# Structured prompt template
+def get_compound_data(description: str) -> dict:
 
-#     try:
-#         response = generate(description)
-#         json_str = safe_json_extract(response)
-#         return json_str
-#     except json.JSONDecodeError:
-#         print("Failed to parse JSON response")
-#         return None
-#     except Exception as e:
-#         print(f"API Error: {str(e)}")
-#         return None
+    try:
+        response = generate(description)
+        json_str = safe_json_extract(response)
+        return json_str
+    except json.JSONDecodeError:
+        print("Failed to parse JSON response")
+        return None
+    except Exception as e:
+        print(f"API Error: {str(e)}")
+        return None
 
 
-# @app.route('/api/model', methods=['POST'])
-# def model():
-#     prompt = request.json
-#     if prompt["code"] == "chemar2602":
-#         response = get_compound_data(prompt["text"])
-#         print(response)
+@app.route('/api/model', methods=['POST'])
+def model():
+    prompt = request.json
+    if prompt["code"] == "chemar2602":
+        response = get_compound_data(prompt["text"])
+        print(response)
         
-#         # Save prompt and response to MongoDB
-#         db = client['chemar']
-#         collection = db['chemar']
-#         document = {
-#             "prompt": prompt["text"],
-#             "response": response
-#         }
-#         collection.insert_one(document)
-#         return response
-#     else:
-#         return "Invalid code"
+        # Save prompt and response to MongoDB
+        db = client['chemar']
+        collection = db['chemar']
+        document = {
+            "prompt": prompt["text"],
+            "response": response
+        }
+        collection.insert_one(document)
+        return response
+    else:
+        return "Invalid code"
 
 
 if __name__ == '__main__':
