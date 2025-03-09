@@ -39,27 +39,22 @@ def get_embedding_model():
     return embedding_model
 
 def process_and_index_pdf(text, chunk_size=1000):
-    try:
-        collection = db["docs"]
-        text = re.sub(r'\s+', ' ', text).strip()
-        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
-        upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-        model = get_embedding_model()
-        for idx, chunk in enumerate(chunks):
-            embedding = model.encode(chunk).tolist()
-            collection.insert_one({
-                "text": chunk,
-                "embedding": embedding,
-                "chunk_number": idx,
-                "source": "uploaded_pdf",
-                "upload_id": upload_id
-            })
-            print(f"Processed chunk {idx}")
-        return True
-    except Exception as e:
-        print(f"PDF processing error: {e}")
-        return False
-
+    collection = db["docs"]
+    text = re.sub(r'\s+', ' ', text).strip()
+    chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+    upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    model = get_embedding_model()
+    for idx, chunk in enumerate(chunks):
+        embedding = model.encode(chunk).tolist()
+        collection.insert_one({
+            "text": chunk,
+            "embedding": embedding,
+            "chunk_number": idx,
+            "source": "uploaded_pdf",
+            "upload_id": upload_id
+        })
+        print(f"Processed chunk {idx}")
+    return True
 # Create search indexes (run once)
 def create_indexes():
     collection = db["docs"]
@@ -105,32 +100,6 @@ def upload():
             flash('Invalid file type. Please upload a PDF.', 'error')
         return redirect(request.url)
     return render_template('upload.html')
-
-
-def process_and_index_pdf(text, chunk_size=1000):
-    try:
-        # collection = db["docs"]
-        # Clean and chunk text
-        text = re.sub(r'\s+', ' ', text).strip()
-        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
-        
-        # Create documents with embeddings
-        documents = []
-        for idx, chunk in enumerate(chunks):
-            embedding = embedding_model.encode(chunk).tolist()
-            documents.append({
-                "text": chunk,
-                "embedding": embedding,
-                "chunk_number": idx,
-                "source": "in-memory"
-            })
-        print(documents)
-        # collection.insert_many(documents)
-        return True
-        
-    except Exception as e:
-        print(f"PDF processing error: {e}")
-        return False
 
 
 # Contact form class
