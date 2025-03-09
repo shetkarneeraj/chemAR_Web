@@ -75,7 +75,6 @@ def create_indexes():
 
 
 @app.route('/upload', methods=['GET', 'POST'])
-@limiter.limit("5 per minute")
 def upload():
     if request.method == 'POST':
         if 'file' not in request.files:
