@@ -18,24 +18,48 @@ from pymongo.server_api import ServerApi
 import os
 import io
 from sentence_transformers import SentenceTransformer
-from transformers import AutoTokenizer, AutoModel
+import datetime
 
-# Initialize embedding model (choose one)
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+# Initialize Flask app
+app = Flask(__name__)
+app.secret_key = "your_secret_key"
+limiter = Limiter(get_remote_address, app=app, default_limits=["5 per minute"])
 
 # Setup MongoDB
-
 uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
-# Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
-db = client[os.getenv("DB_NAME", "chemar")]
+db = client["chemar"]
 
-try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
-except Exception as e:
-    print(e)
+# Initialize embedding model (choose one)
+embedding_model = None
+def get_embedding_model():
+    global embedding_model
+    if embedding_model is None:
+        embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    return embedding_model
+
+def process_and_index_pdf(text, chunk_size=1000):
+    try:
+        collection = db["docs"]
+        text = re.sub(r'\s+', ' ', text).strip()
+        chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+        documents = []
+        upload_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        model = get_embedding_model()
+        for idx, chunk in enumerate(chunks):
+            embedding = model.encode(chunk).tolist()
+            documents.append({
+                "text": chunk,
+                "embedding": embedding,
+                "chunk_number": idx,
+                "source": "uploaded_pdf",
+                "upload_id": upload_id
+            })
+        collection.insert_many(documents)
+        return True
+    except Exception as e:
+        print(f"PDF processing error: {e}")
+        return False
 
 # Create search indexes (run once)
 def create_indexes():
@@ -56,40 +80,32 @@ def create_indexes():
     )
 
 
-# Initialize Flask app
-app = Flask(__name__)
-app.secret_key = "your_secret_key"
-limiter = Limiter(get_remote_address, app=app, default_limits=["5 per minute"])  # Limit to 5 requests per minute
-
-
-# PDF Processing with local embeddings
-@app.route('/api/process_pdf', methods=['POST'])
-def process_pdf():
-    if 'file' not in request.files:
-        return "No file part", 400
-
-    file = request.files['file']
-    if file.filename == '':
-        return "No selected file", 400
-
-    if file and file.filename.endswith('.pdf'):
-        try:
-            # Read the file in memory
-            pdf_bytes = file.read()
-            reader = PdfReader(io.BytesIO(pdf_bytes))
-            text = " ".join([page.extract_text() for page in reader.pages])
-            
-            # Process and index the PDF content
-            success = process_and_index_pdf(text)
-            if success:
-                return "PDF processed and indexed successfully", 200
-            else:
-                return "Error processing PDF", 500
-        except Exception as e:
-            print(f"Error processing PDF: {e}")
-            return "Error processing PDF", 500
-    else:
-        return "Invalid file type", 400
+@app.route('/upload', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
+def upload():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file', 'error')
+            return redirect(request.url)
+        if file and file.filename.endswith('.pdf'):
+            try:
+                pdf_bytes = file.read()
+                reader = PdfReader(io.BytesIO(pdf_bytes))
+                text = " ".join([page.extract_text() for page in reader.pages])
+                if process_and_index_pdf(text):
+                    flash('PDF uploaded and processed successfully', 'success')
+                else:
+                    flash('Error processing PDF', 'error')
+            except Exception as e:
+                flash(f'Error: {str(e)}', 'error')
+        else:
+            flash('Invalid file type. Please upload a PDF.', 'error')
+        return redirect(request.url)
+    return render_template('upload.html')
 
 
 def process_and_index_pdf(text, chunk_size=1000):
