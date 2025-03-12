@@ -375,4 +375,4 @@ def model():
 if __name__ == '__main__':
     # Uncomment the following line to create indexes once, then comment it back out
     # create_indexes()
-    app.run(debug=True, use_reloader=True)
+    app.run(debug=True, use_reloader=True, ssl_context=("cert.pem", "key.pem"), host="0.0.0.0", port=8000)
