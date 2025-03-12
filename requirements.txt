@@ -18,3 +18,4 @@ PyPDF2
 transformers
 sentence-transformers
 gunicorn
+openai
