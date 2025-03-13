@@ -35,7 +35,7 @@ embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 # **Initialize Azure OpenAI Client**
 endpoint = os.getenv("ENDPOINT_URL", "https://chemar-intelligence.openai.azure.com/")
 deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4")  # Ensure this is a vision-capable deployment
-subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "REPLACE_WITH_YOUR_KEY_VALUE_HERE")  # Set this in environment variables
+subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "1k1KCMAv9JC2febmc9TaURIWjv3WkD5nphxZPuIeAdq7Afj5QqGJJQQJ99BCAC77bzfXJ3w3AAAAACOGuDRz")  # Set this in environment variables
 
 openai_client = AzureOpenAI(
     azure_endpoint=endpoint,
@@ -367,7 +367,7 @@ def model():
             "response": response
         }
         collection.insert_one(document)
-        return response or "Error processing request"
+        return response
     else:
         return "Invalid code"
 
@@ -378,4 +378,4 @@ def model():
 #     app.run(debug=True, use_reloader=True, ssl_context=("cert.pem", "key.pem"), host="0.0.0.0", port=8000)
 
 if __name__ == '__main__':
-   app.run()
+   app.run(host="0.0.0.0", port=8000)
