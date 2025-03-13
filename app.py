@@ -33,8 +33,11 @@ db = client["chemar"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # **Initialize Azure OpenAI Client**
-endpoint = os.getenv("ENDPOINT_URL", "https://chemar-intelligence.openai.azure.com/")
-deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4")  # Ensure this is a vision-capable deployment
+endpoint = os.getenv("ENDPOINT_URL", "https://chemar-intelligence.openai.azure.com/")  
+deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4")  
+search_endpoint = os.getenv("SEARCH_ENDPOINT", "https://chamar-ai-search.search.windows.net")  
+search_key = os.getenv("SEARCH_KEY", "8oVmprmclNQH8B23GhQg6mxLY7yX1iOsdv6id5WdOCAzSeDbaVBq")
+search_index = os.getenv("SEARCH_INDEX_NAME", "chemar")  
 subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "1k1KCMAv9JC2febmc9TaURIWjv3WkD5nphxZPuIeAdq7Afj5QqGJJQQJ99BCAC77bzfXJ3w3AAAAACOGuDRz")  # Set this in environment variables
 
 openai_client = AzureOpenAI(
@@ -321,17 +324,39 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     ]
 
     # Generate completion using Azure OpenAI
-    completion = openai_client.chat.completions.create(
+    
+    # Generate the completion  
+    completion = client.chat.completions.create(  
         model=deployment,
         messages=messages,
-        max_tokens=4000,
-        temperature=0.7,
-        top_p=0.95,
-        frequency_penalty=0,
+        max_tokens=800,  
+        temperature=0.7,  
+        top_p=0.95,  
+        frequency_penalty=0,  
         presence_penalty=0,
-        stop=None,
+        stop=None,  
         stream=False,
-        response_format={"type": "json_object"}
+        extra_body={
+        "data_sources": [{
+            "type": "azure_search",
+            "parameters": {
+                "endpoint": f"{search_endpoint}",
+                "index_name": "chemar",
+                "semantic_configuration": "default",
+                "query_type": "semantic",
+                "fields_mapping": {},
+                "in_scope": True,
+                "role_information": "",
+                "filter": None,
+                "strictness": 3,
+                "top_n_documents": 5,
+                "authentication": {
+                "type": "api_key",
+                "key": f"{search_key}"
+                }
+            }
+            }]
+        }
     )
 
     # Return the response text
