@@ -34,14 +34,14 @@ db = client["chemar"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # **Initialize Azure OpenAI Client**
-endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview")  
-deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4o")  
-subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj") 
+endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/")  
+deployment = os.getenv("DEPLOYMENT_NAME", "o1")  
+subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj")  
 
 openai_client = AzureOpenAI(  
     azure_endpoint=endpoint,  
     api_key=subscription_key,  
-    api_version="2024-05-01-preview",
+    api_version="2024-12-01-preview",
 )
 
 # **PDF Processing Function**
@@ -288,17 +288,18 @@ Analyze the provided chemical compound description and image (if available), and
 }
 
 Important rules:
-1. Assign unique IDs to all atoms (e.g., C1, C2, O1, H1, H2).
-2. For "position", assign 3D coordinates based on standard bond lengths (e.g., C-H: 1.09 Å, O-H: 0.96 Å) and bond angles (e.g., 109.5° for sp3, 120° for sp2). Scale the coordinates so that for each axis (x, y, z), the minimum value is mapped to 0 and the maximum to 0.6, preserving relative distances within each axis.
-3. For "hybridization", use 'sp3', 'sp2', 'sp', etc., for atoms like carbon, nitrogen, and oxygen where applicable; use 's' for hydrogen.
-4. For "bonds", list all connections with "bond_type" as 'single', 'double', or 'triple'. Set "plane" to 'horizontal' if the bond is primarily in the xy-plane (i.e., |z2 - z1| < 0.1 * max(|x2 - x1|, |y2 - y1|) in original coordinates), else 'vertical'. For "angle", calculate the angle in radians of the bond's projection onto the xy-plane from the positive x-axis using atan2(dy, dx) where dy = y2 - y1, dx = x2 - x1. For "length", provide the bond length in angstroms before scaling.
-5. Identify and list all relevant functional groups (e.g., hydroxyl, carboxyl) based on the structure.
-6. For "molecular_geometry", specify the shape (e.g., 'bent', 'tetrahedral') for small molecules or central atoms, and list all bond angles between sets of three connected atoms in degrees.
-7. Ensure all atoms are part of a single, connected molecular structure.
-8. Do not truncate any data and return only the JSON object without additional text.
+1. Assign unique IDs to all atoms (e.g., C1, C2, O1, H1, H2) for every atom in the molecule, including all hydrogens unless explicitly omitted in the description’s condensed notation.
+2. For "position", construct a complete 3D model using standard bond lengths (e.g., C-C: 1.54 Å, C-H: 1.09 Å, C-N: 1.47 Å, C-Cl: 1.74 Å, aromatic C-C: 1.39 Å, C=N: 1.32 Å) and bond angles (e.g., 109.5° for sp3, 120° for sp2, 180° for sp) based on the compound’s structure. Start with a central atom and expand outward, ensuring all rings, substituents, and functional groups are fully represented. Scale the coordinates so that each axis (x, y, z) independently maps the minimum value to 0 and the maximum to 0.6, preserving relative distances within each axis. Use the formula: scaled_value = (original_value - min_value) / (max_value - min_value) * 0.6 for each axis.
+3. For "hybridization", assign 'sp3', 'sp2', 'sp', etc., to carbon, nitrogen, and oxygen atoms based on their bonding environment (e.g., sp2 for aromatic carbons or double-bonded atoms, sp3 for tetrahedral carbons); use 's' for hydrogen atoms.
+4. For "bonds", list every covalent bond in the molecule, specifying "bond_type" as 'single', 'double', or 'triple'. Determine "plane" as 'horizontal' if the bond’s z-coordinate difference (|z2 - z1|) is less than 0.1 times the maximum of its x- or y-differences (|x2 - x1| or |y2 - y1|) in original coordinates, otherwise 'vertical'. Calculate "angle" in radians as the bond’s projection onto the xy-plane relative to the positive x-axis using atan2(dy, dx), where dy = y2 - y1, dx = x2 - x1. Set "length" to the bond length in angstroms from the original 3D model before scaling.
+5. Identify and list all relevant functional groups (e.g., triazole, benzene, imine, halogen) based on atomic connectivity and bond types, ensuring no groups are omitted from the structure.
+6. For "molecular_geometry", specify the overall shape (e.g., 'tetrahedral', 'trigonal-planar', 'complex polycyclic') reflecting the molecule’s structure. List all significant bond angles for every set of three connected atoms (A-B-C) in degrees, calculated from the original 3D model, ensuring completeness for complex molecules.
+7. Ensure all atoms form a single, fully connected molecular structure, accounting for all rings, substituents, and hydrogens required by the molecular formula and valency rules. Cross-check the atom count against the provided formula (e.g., C17H12Cl2N4 must have exactly 17 carbons, 12 hydrogens, 2 chlorines, 4 nitrogens).
+8. Do not truncate any data—include every atom, bond, and angle necessary to represent the entire molecule. Return only the JSON object without additional text or comments.
+9. If the provided description or formula indicates a specific structure (e.g., ring fusions, substituent positions), prioritize that information and correct any inconsistencies to match the molecular formula and known chemical properties of the compound.
+10 The structure retrived is truncated, make sure all theelements and their position is correct and match it against the provided formula.
 """
 
-# **Generate Chemical Compound Data Function**
 def generate(description: str, image_base64: Optional[str] = None) -> str:
     # Convert the description into a vector embedding
     query_embedding = embedding_model.encode(description).tolist()
@@ -355,25 +356,19 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     completion = openai_client.chat.completions.create(  
         model=deployment,
         messages=messages,
-        max_tokens=800,  
-        temperature=0.7,  
-        top_p=0.95,  
-        frequency_penalty=0,  
-        presence_penalty=0,
+        max_completion_tokens=40000,
         stop=None,  
         stream=False
     )
-    
     # Return the response content
-    return completion.choices[0].message.content
+    return completion.to_json()
 
 # **Get Compound Data Function**
 def get_compound_data(description: str, image_base64: Optional[str] = None) -> Optional[str]:
     """Process description and optional image to get compound data."""
     try:
         response = generate(description, image_base64)
-        json_str = safe_json_extract(response)
-        return json_str
+        return response
     except Exception as e:
         print(f"Error: {str(e)}")
         return None
@@ -387,18 +382,19 @@ def model():
         description = prompt.get("text")
         image_base64 = prompt.get("image")
         collection = db['chemar']
-        existing_entry = collection.find_one({"prompt": description.lower()})
+        existing_entry = collection.find_one({"prompt": description.lower().strip()})
         if existing_entry:
-            return json.loads(existing_entry["response"])
+            return existing_entry['response']
         else:
             # Generate new response
             response = get_compound_data(description, image_base64)
+            answer = json.loads(json.loads(response)["choices"][0]["message"]["content"])
             document = {
                 "prompt": description.lower(),
-                "response": response
+                "response": answer
             }
             collection.insert_one(document)
-            return response
+            return answer
     else:
         return "Invalid code"
 
