@@ -18,6 +18,7 @@ import os
 import io
 from sentence_transformers import SentenceTransformer
 import datetime
+import uuid
 
 # **Initialize Flask App**
 app = Flask(__name__)
@@ -81,33 +82,56 @@ def create_indexes():
         }
     )
 
+gibbrish_text = ""
+
+@app.route('/generate_upload_link')
+def generate_upload_link():
+    """Generate a single-use upload link and send it via email."""
+    global gibbrish_text
+    token = uuid.uuid4().hex  # Generate a unique token
+    gibbrish_text = token     # Set the global variable
+    upload_url = f"{request.url_root}upload?token={token}"
+    send_email("Neeraj", "Shetkar", "neerajshetkar@gmail.com", f"Upload link: {upload_url}")
+    return "Upload link generated and sent"
+
 # **PDF Upload Route**
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    """Handle PDF uploads and process them for indexing."""
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part', 'error')
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file', 'error')
-            return redirect(request.url)
-        if file and file.filename.endswith('.pdf'):
-            try:
-                pdf_bytes = file.read()
-                reader = PdfReader(io.BytesIO(pdf_bytes))
-                text = " ".join([page.extract_text() for page in reader.pages])
-                if process_and_index_pdf(text):
-                    flash('PDF uploaded and processed successfully', 'success')
-                else:
-                    flash('Error processing PDF', 'error')
-            except Exception as e:
-                flash(f'Error: {str(e)}', 'error')
+    """Handle PDF uploads with single-use token validation."""
+    global gibbrish_text
+    if request.method == 'GET':
+        token = request.args.get('token')  # Get token from URL query parameter
+        if token and token == gibbrish_text:
+            return render_template('upload.html', token=token, valid=True)
         else:
-            flash('Invalid file type. Please upload a PDF.', 'error')
-        return redirect(request.url)
-    return render_template('upload.html')
+            return redirect(url_for('upload'))
+    
+    elif request.method == 'POST':
+        token = request.form.get('token')  # Get token from form data
+        if token and token == gibbrish_text:
+            if 'file' not in request.files:
+                flash('No file part', 'error')
+            else:
+                file = request.files['file']
+                if file.filename == '':
+                    flash('No selected file', 'error')
+                elif file and file.filename.endswith('.pdf'):
+                    try:
+                        pdf_bytes = file.read()
+                        reader = PdfReader(io.BytesIO(pdf_bytes))
+                        text = " ".join([page.extract_text() for page in reader.pages])
+                        if process_and_index_pdf(text):
+                            gibbrish_text = ""  # Reset token after successful upload
+                            flash('PDF uploaded and processed successfully', 'success')
+                        else:
+                            flash('Error processing PDF', 'error')
+                    except Exception as e:
+                        flash(f'Error: {str(e)}', 'error')
+                else:
+                    flash('Invalid file type. Please upload a PDF.', 'error')
+        else:
+            flash('Invalid or expired link', 'error')
+        return redirect(url_for('upload'))
 
 # **Contact Form Class**
 class ContactForm(FlaskForm):
@@ -266,13 +290,14 @@ Analyze the provided chemical compound description and image (if available), and
 
 Important rules:
 1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
-2. Positional coordinates should be scaled to range 0 to 0.65
+2. Positional coordinates should be scaled to range 0 to 0.6
 3. List all relevant bonds and bond angles
 4. Add a clear chemical description
 5. Include all relevant functional groups
 6. Show all elements and their positions
 7. Do not truncate any data
 8. Do not return anything other than JSON
+9. Make aure all the elements are bonded with the main chain and you return only one main chain
 """
 
 # **Generate Chemical Compound Data Function**
@@ -324,39 +349,17 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     ]
 
     # Generate completion using Azure OpenAI
-    
-    # Generate the completion  
-    completion = client.chat.completions.create(  
+    completion = openai_client.chat.completions.create(
         model=deployment,
         messages=messages,
-        max_tokens=800,  
-        temperature=0.7,  
-        top_p=0.95,  
-        frequency_penalty=0,  
+        max_tokens=4000,
+        temperature=0.7,
+        top_p=0.95,
+        frequency_penalty=0,
         presence_penalty=0,
-        stop=None,  
+        stop=None,
         stream=False,
-        extra_body={
-        "data_sources": [{
-            "type": "azure_search",
-            "parameters": {
-                "endpoint": f"{search_endpoint}",
-                "index_name": "chemar",
-                "semantic_configuration": "default",
-                "query_type": "semantic",
-                "fields_mapping": {},
-                "in_scope": True,
-                "role_information": "",
-                "filter": None,
-                "strictness": 3,
-                "top_n_documents": 5,
-                "authentication": {
-                "type": "api_key",
-                "key": f"{search_key}"
-                }
-            }
-            }]
-        }
+        response_format={"type": "json_object"}
     )
 
     # Return the response text

@@ -1,0 +1,1479 @@
+Rank,Compound Name,Chemical Formula
+1,Water,H2O
+2,Carbon Dioxide,CO2
+3,Oxygen Gas,O2
+4,Nitrogen Gas,N2
+5,Hydrogen Gas,H2
+6,Ammonia,NH3
+7,Methane,CH4
+8,Ethanol,C2H5OH
+9,Acetic Acid,CH3COOH
+10,Sulfuric Acid,H2SO4
+11,Nitric Acid,HNO3
+12,Hydrochloric Acid,HCl
+13,Sodium Chloride,NaCl
+14,Sodium Hydroxide,NaOH
+15,Potassium Hydroxide,KOH
+16,Calcium Carbonate,CaCO3
+17,Calcium Oxide,CaO
+18,Magnesium Sulfate,MgSO4
+19,Glucose,C6H12O6
+20,Fructose,C6H12O6
+21,Sucrose,C12H22O11
+22,Urea,CH4N2O
+23,Benzene,C6H6
+24,Toluene,C7H8
+25,Xylene,C8H10
+26,Styrene,C8H8
+27,Polyethylene,(C2H4)n
+28,Polypropylene,(C3H6)n
+29,Polyvinyl Chloride,(C2H3Cl)n
+30,Polystyrene,(C8H8)n
+31,Acetaldehyde,C2H4O
+32,Acetamide,C2H5NO
+33,Acetate,CH3COO–
+34,Acetonitrile,C2H3N
+35,Acetylene,C2H2
+36,Aluminium Hydroxide,Al(OH)3
+37,Aluminium Sulfate,Al2(SO4)3
+38,Aluminum,Al
+39,Aluminum Bromide,AlBr3
+40,Aluminum Fluoride,AlF3
+41,Aluminum Oxide,Al2O3
+42,Aluminum Phosphate,AlPO4
+43,Aluminum Sulfide,Al2S3
+44,Ammonium Acetate,C2H3O2NH4
+45,Ammonium Bicarbonate,NH4HCO3
+46,Ammonium Bromide,NH4Br
+47,Ammonium Carbonate,(NH4)2CO3
+48,Ammonium Chloride,NH4Cl
+49,Ammonium Hydroxide,NH4OH
+50,Ammonium Iodide,NH4I
+51,Ammonium Nitrate,NH4NO3
+52,Ammonium Nitrite,NH4NO2
+53,Ammonium Oxide,(NH4)2O
+54,Ammonium Persulfate,(NH4)2S2O8
+55,Ammonium Phosphate,(NH4)3PO4
+56,Ammonium Sulfate,(NH4)2SO4
+57,Argon Gas,Ar
+58,Ascorbic Acid,C6H8O6
+59,Barium Bromide,BaBr2
+60,Barium Carbonate,BaCO3
+61,Barium Chloride,BaCl2
+62,Barium Fluoride,BaF2
+63,Barium Hydroxide,Ba(OH)2
+64,Barium Iodide,BaI2
+65,Barium Nitrate,Ba(NO3)2
+66,Barium Oxide,BaO
+67,Barium Sulfate,BaSO4
+68,Benzene,C6H6
+69,Benzoic Acid,C7H6O2
+70,Bicarbonate,CHO3–
+71,Bleach (Sodium Hypochlorite),NaClO
+72,Boric Acid,H3BO3
+73,Bromate,BrO3–
+74,Bromine,Br
+75,Bromothymol Blue,C27H28Br2O5S
+76,Butane,C4H10
+77,Butanoic Acid,C4H8O2
+78,Calcium Acetate,C4H6O4Ca
+79,Calcium Carbide,CaC2
+80,Calcium Carbonate,CaCO3
+81,Calcium Chloride,CaCl2
+82,Calcium Hydride,CaH2
+83,Calcium Hydroxide,Ca(OH)2
+84,Calcium Iodide,CaI2
+85,Calcium Nitrate,Ca(NO3)2
+86,Calcium Oxide,CaO
+87,Calcium Phosphate,Ca3(PO4)2
+88,Carbon Disulfide,CS2
+89,Carbon Monoxide,CO
+90,Carbon Tetrachloride,CCl4
+91,Carbonic Acid,H2CO3
+92,Cellulose,(C6H10O5)n
+93,Chlorine Gas,Cl2
+94,Chlorine Trifluoride,ClF3
+95,Chloroacetic Acid,C2H3O2Cl
+96,Chromate,CrO42–
+97,Chromic Acid,H2CrO4
+98,Chromic Oxide,Cr2O3
+99,Citric Acid,C6H8O7
+100,Copper(II) Chloride,CuCl2
+101,Copper(II) Carbonate,CuCO3
+102,Copper Sulfate,CuSO4
+103,Copper(I) Oxide,Cu2O
+104,Cyanide,CN–
+105,Diatomic Bromine,Br2
+106,Dichloromethane,CH2Cl2
+107,Dichromate,K2Cr2O7
+108,Dihydrogen Monoxide,H2O
+109,Dimethyl Sulfoxide,C2H6OS
+110,Dimethylglyoxime,C4H8N2O2
+111,Dinitrogen Monoxide,N2O
+112,Dinitrogen Pentoxide,N2O5
+113,Dinitrogen Trioxide,N2O3
+114,Dipotassium Phosphate,K2HPO4
+115,Ethane,C2H6
+116,Ethanol,C2H5OH
+117,Ethylene,C2H4
+118,Ethylene Glycol,C2H6O2
+119,Eugenol,C10H12O2
+120,Fluorine,F2
+121,Formaldehyde,CH2O
+122,Formic Acid,HCOOH
+123,Fructose,C6H12O6
+124,Glycerin,C3H8O3
+125,Helium,He
+126,Hexamine,C6H12N4
+127,Hexane,C6H14
+128,Hydrazine,N2H4
+129,Hydrobromic Acid,HBr
+130,Hydrochloric Acid,HCl
+131,Hydrocyanic Acid,HCN
+132,Hydrogen Peroxide,H2O2
+133,Hydrogen Sulfate,HSO4–
+134,Hydroiodic Acid,HI
+135,Hydroquinone,C6H6O2
+136,Hydroxide,OH–
+137,Hypobromous Acid,HBrO
+138,Hypochlorite,ClO–
+139,Hypochlorous Acid,HClO
+140,Hypoiodous Acid,HIO
+141,Iodide,I–
+142,Iodine,I2
+143,Iron(III) Oxide,Fe2O3
+144,Iron Oxide,Fe2O3
+145,Lactic Acid,C3H6O3
+146,Lead(IV) Oxide,PbO2
+147,Lead Acetate,Pb(C2H3O2)2
+148,Lead(II) Acetate,Pb(C2H3O2)2
+149,Lead Iodide,PbI2
+150,Lithium Bromide,LiBr
+151,Lithium Chloride,LiCl
+152,Lithium Hydroxide,LiOH
+153,Lithium Iodide,LiI
+154,Lithium Oxide,Li2O
+155,Lithium Phosphate,Li3PO4
+156,Magnesium Carbonate,MgCO3
+157,Magnesium Chloride,MgCl2
+158,Magnesium Hydroxide,Mg(OH)2
+159,Magnesium Iodide,MgI2
+160,Magnesium Nitrate,Mg(NO3)2
+161,Magnesium Oxide,MgO
+162,Magnesium Phosphate,Mg3(PO4)2
+163,Magnesium Sulfate,MgSO4
+164,Magnesium Sulfide,MgS
+165,Maleic Acid,C4H4O4
+166,Maltose,C12H22O11
+167,Manganese Dioxide,MnO2
+168,Mannitol,C6H14O6
+169,Mercuric Chloride,HgCl2
+170,Methane,CH4
+171,Methanol,CH3OH
+172,Methyl Acetate,C3H6O2
+173,Methyl Ethyl Ketone,C4H8O
+174,Methylene Blue,C16H18ClN3S
+175,Monopotassium Phosphate,KH2PO4
+176,Monosodium Glutamate,C5H8NO4Na
+177,Nickel Acetate,C4H8O4Ni
+178,Nickel Nitrate,Ni(NO3)2
+179,Nickel Sulfate,NiSO4
+180,Nitric Acid,HNO3
+181,Nitrite,NO2–
+182,Nitrogen Dioxide,NO2
+183,Nitrogen Monoxide,NO
+184,Nitrous Acid,HNO2
+185,Oxalate,C2O42–
+186,Oxalic Acid,H2C2O4
+187,Oxygen,O
+188,Ozone,O3
+189,Para-dichlorobenzene,C6H4Cl2
+190,Perchloric Acid,HClO4
+191,Permanganate,KMnO4
+192,Peroxydisulfuric Acid,H2S2O8
+193,Phenol,C6H6O
+194,Phenolphthalein,C20H14O4
+195,Phenyl,C6H5
+196,Phosphate,PO43–
+197,Phosphoric Acid,H3PO4
+198,Phosphorous Acid,H3PO3
+199,Phosphorus Pentachloride,PCl5
+200,Phosphorus Trichloride,PCl3
+201,Phosphorus Triiodide,PI3
+202,Polystyrene,(C8H8)n
+203,Polyurethane Foam,C27H36N2O10
+204,Potassium Acetate,CH3CO2K
+205,Potassium Bicarbonate,KHCO3
+206,Potassium Bromide,KBr
+207,Potassium Carbonate,K2CO3
+208,Potassium Chlorate,KClO3
+209,Potassium Chloride,KCl
+210,Potassium Chromate,CrK2O4
+211,Potassium Cyanide,KCN
+212,Potassium Dichromate,K2Cr2O7
+213,Potassium Ferrocyanide,K4Fe(CN)6
+214,Potassium Fluoride,KF
+215,Potassium Hydroxide,KOH
+216,Potassium Hypochlorite,KClO
+217,Potassium Iodate,KIO3
+218,Potassium Iodide,KI
+219,Potassium Nitrate,KNO3
+220,Potassium Nitrite,KNO2
+221,Potassium Oxide,K2O
+222,Potassium Phosphate,KH2PO4
+223,Potassium Sulfite,K2SO3
+224,Potassium Thiocyanate,KSCN
+225,Propane,C3H8
+226,Pyridine,C5H5N
+227,Resorcinol,C6H6O2
+228,Salicylic Acid,C7H6O3
+229,Silicon Dioxide,SiO2
+230,Silver Acetate,AgC2H3O2
+231,Silver Carbonate,Ag2CO3
+232,Silver Chloride,AgCl
+233,Silver Nitrate,AgNO3
+234,Silver Oxide,Ag2O
+235,Silver Phosphate,Ag3PO4
+236,Sodium Acetate,C2H3NaO2
+237,Sodium Bicarbonate,NaHCO3
+238,Sodium Bisulfate,NaHSO4
+239,Sodium Borate,Na2[B4O5(OH)4]·8H2O
+240,Sodium Bromide,NaBr
+241,Sodium Carbonate,Na2CO3
+242,Sodium Chlorate,NaClO3
+243,Sodium Chloride,NaCl
+244,Sodium Chromate,Na2CrO4
+245,Sodium Citrate,Na3C6H5O7
+246,Sodium Cyanide,NaCN
+247,Sodium Dichromate,Na2Cr2O7
+248,Sodium Fluoride,NaF
+249,Sodium Hydroxide,NaOH
+250,Sodium Hypochlorite,NaClO
+251,Sodium Iodide,NaI
+252,Sodium Metabisulfite,Na2S2O5
+253,Sodium Nitrate,NaNO3
+254,Sodium Nitride,Na3N
+255,Sodium Nitrite,NaNO2
+256,Sodium Oxide,Na2O
+257,Sodium Percarbonate,C2H6Na4O12
+258,Sodium Peroxide,Na2O2
+259,Sodium Phosphate,Na3PO4
+260,Sodium Potassium Tartrate,C4H4O6KNa·4H2O
+261,Sodium Silicate,(Na2O)x·SiO2
+262,Sodium Sulfate,Na2SO4
+263,Sodium Sulfide,Na2S
+264,Sodium Sulfite,Na2SO3
+265,Sodium Thiosulfate,Na2S2O3
+266,Stearic Acid,C18H36O2
+267,Strontium Chloride,SrCl2
+268,Strontium Nitrate,Sr(NO3)2
+269,Sucrose,C12H22O11
+270,Sulfate Ion,SO42–
+271,Sulfur Dioxide,SO2
+272,Sulfur Hexafluoride,SF6
+273,Sulfur Trioxide,SO3
+274,Sulfuric Acid,H2SO4
+275,Sulfurous Acid,H2SO3
+276,Tannic Acid,C76H52O46
+277,Tartaric Acid,C4H6O6
+278,Tetrachloroethylene,C2Cl4
+279,Tin(II) Chloride,SnCl2
+280,Tin Oxide,SnO2
+281,Titanium Dioxide,TiO2
+282,Toluene,C7H8
+283,Trichloroacetic Acid,C2HCl3O2
+284,Urea,CH4N2O
+285,Urethane,C3H7NO2
+286,Xenon Difluoride,XeF2
+287,Xylene,C8H10
+288,Zinc Acetate,Zn(CH3COO)2
+289,Zinc Carbonate,ZnCO3
+290,Zinc Chloride,ZnCl2
+291,Zinc Hydroxide,Zn(OH)2
+292,Zinc Iodide,ZnI2
+293,Zinc Nitrate,Zn(NO3)2
+294,Zinc Phosphate,Zn3(PO4)2
+295,Zinc Sulfate,ZnSO4
+296,Zinc Sulfide,ZnS
+297,Acetylsalicylic Acid,C9H8O4
+298,Adenine,C5H5N5
+299,Adenosine Triphosphate,C10H16N5O13P3
+300,Adipic Acid,C6H10O4
+301,Alanine,C3H7NO2
+302,Arginine,C6H14N4O2
+303,Aspartic Acid,C4H7NO4
+304,Glutamic Acid,C5H9NO4
+305,Glycine,C2H5NO2
+306,Histidine,C6H9N3O2
+307,Isoleucine,C6H13NO2
+308,Leucine,C6H13NO2
+309,Lysine,C6H14N2O2
+310,Methionine,C5H11NO2S
+311,Phenylalanine,C9H11NO2
+312,Proline,C5H9NO2
+313,Serine,C3H7NO3
+314,Threonine,C4H9NO3
+315,Tryptophan,C11H12N2O2
+316,Tyrosine,C9H11NO3
+317,Valine,C5H11NO2
+318,Glucose,C6H12O6
+319,Lactose,C12H22O11
+320,Cellobiose,C12H22O11
+321,Chitin,(C8H13O5N)n
+322,Chitosan,(C6H11NO4)n
+323,Starch,(C6H10O5)n
+324,Ribose,C5H10O5
+325,Deoxyribose,C5H10O4
+326,Adenosine,C10H13N5O4
+327,Guanine,C5H5N5O
+328,Cytosine,C4H5N3O
+329,Thymine,C5H6N2O2
+330,Uracil,C4H4N2O2
+331,Dimethylformamide,C3H7NO
+332,Tetrahydrofuran,C4H8O
+333,Chloroform,CHCl3
+334,Benzaldehyde,C7H6O
+335,Aniline,C6H7N
+336,Nitrobenzene,C6H5NO2
+337,Cresol (o-Cresol),C7H8O
+338,Catechol,C6H6O2
+339,Naphthalene,C10H8
+340,Anthracene,C14H10
+341,Phenanthrene,C14H10
+342,Pyrene,C16H10
+343,Fluorene,C13H10
+344,Acenaphthene,C12H10
+345,Acenaphthylene,C12H8
+346,Biphenyl,C12H10
+347,Diphenyl Ether,C12H10O
+348,N-Phenyl-1-naphthylamine,C16H15N
+349,Triphenylphosphine,C18H15P
+350,Tetraethyllead,C8H18Pb
+351,Lithium Aluminum Hydride,LiAlH4
+352,Sodium Borohydride,NaBH4
+353,Ferrocene,C10H10Fe
+354,Nickelocene,C10H10Ni
+355,Cobaltocene,C10H10Co
+356,Vitamin D3 (Cholecalciferol),C27H44O
+357,Vitamin B12 (Cobalamin),C63H88CoN14O14P
+358,Vitamin E (α-Tocopherol),C29H50O2
+359,Ibuprofen,C13H18O2
+360,Acetaminophen (Paracetamol),C8H9NO2
+361,Naproxen,C14H14O3
+362,Diclofenac,C14H11Cl2NO2
+363,Simvastatin,C25H38O5
+364,Atorvastatin,C33H35FN2O5
+365,Omeprazole,C17H19N3O3S
+366,Amoxicillin,C16H19N3O5S
+367,Penicillin G,C16H18N2O4S
+368,Ciprofloxacin,C17H18FN3O3
+369,Tetracycline,C22H24N2O8
+370,Erythromycin,C37H67NO13
+371,Chloramphenicol,C11H12Cl2N2O5
+372,Caffeine,C8H10N4O2
+373,Nicotine,C10H14N2
+374,Δ9-Tetrahydrocannabinol,C21H30O2
+375,Cannabidiol,C21H30O2
+376,Morphine,C17H19NO3
+377,Codeine,C18H21NO3
+378,Heroin (Diacetylmorphine),C21H23NO5
+379,Fentanyl,C22H28N2O
+380,Methadone,C21H27NO
+381,Buprenorphine,C29H41NO4
+382,Diazepam,C16H13ClN2O
+383,Lorazepam,C15H11Cl2N2O2
+384,Alprazolam,C17H13ClN4
+385,Zolpidem,C17H17N3O
+386,Triazolam,C17H12Cl2N4
+387,Fluoxetine,C17H18F3NO
+388,Sertraline,C17H17NCl2
+389,Paroxetine,C19H20FNO3
+390,Venlafaxine,C17H27NO2
+391,Duloxetine,C18H19NOS
+392,Bupropion,C13H18ClNO
+393,Lithium Carbonate,Li2CO3
+394,Methyl Isocyanide,CH3NC
+395,Dimethyl Sulfide,C2H6S
+396,Hydrogen Sulfide,H2S
+397,Carbon Diselenide,CSe2
+398,Selenium Dioxide,SeO2
+399,Tellurium Dioxide,TeO2
+400,Boron Trifluoride,BF3
+401,Boric Anhydride,B2O3
+402,Silicon Tetrachloride,SiCl4
+403,Silicon Tetrafluoride,SiF4
+404,Phosphorus Pentoxide,P4O10
+405,Sulfur Dichloride,SCl2
+406,Sulfur Monochloride,S2Cl2
+407,Chlorine Dioxide,ClO2
+408,Sodium Hypophosphite,NaH2PO2
+409,Sodium Metasilicate,Na2SiO3
+410,Potassium Metabisulfite,K2S2O5
+411,Potassium Bisulfite,KHSO3
+412,Calcium Hypochlorite,Ca(OCl)2
+413,Zinc Oxide,ZnO
+414,Titanium Tetrachloride,TiCl4
+415,Iron(II) Sulfate,FeSO4
+416,Iron(III) Sulfate,Fe2(SO4)3
+417,Copper(I) Chloride,CuCl
+418,Copper(II) Sulfate·5H2O,CuSO4·5H2O
+419,Sodium Stannate,Na2SnO3
+420, Tin(II) Sulfate,SnSO4
+421,Lead(II) Sulfate,PbSO4
+422,Gold(III) Chloride,AuCl3
+423,Platinum(IV) Chloride,PtCl4
+424,Palladium(II) Chloride,PdCl2
+425,Rhodium(III) Chloride,RhCl3
+426,Iridium(III) Chloride,IrCl3
+427,Osmium Tetroxide,OsO4
+428,Rhenium(VII) Oxide,Re2O7
+429,Tungsten Hexachloride,WCl6
+430,Molybdenum Trioxide,MoO3
+431,Uranium Hexafluoride,UF6
+432,Plutonium Dioxide,PuO2
+433,Zirconium Dioxide,ZrO2
+434,Hafnium Chloride,HfCl4
+435,Tantalum Pentoxide,Ta2O5
+436,Niobium Pentoxide,Nb2O5
+437,Boron Nitride,BN
+438,Silicon Nitride,Si3N4
+439,Titanium Nitride,TiN
+440,Zirconium Nitride,ZrN
+441,Vanadium(V) Oxide,V2O5
+442,Chromium(III) Oxide,Cr2O3
+443,Iron(II) Oxide,FeO
+444,Cobalt(II) Oxide,CoO
+445,Nickel(II) Oxide,NiO
+446,Copper(II) Oxide,CuO
+447,Zinc Chromate,ZnCrO4
+448,Bismuth Oxide,Bi2O3
+449,Lead(II) Oxide,PbO
+450,Mercury(I) Chloride,Hg2Cl2
+451,Cadmium Sulfide,CdS
+452,Cadmium Selenide,CdSe
+453,Selenium,Se
+454,Tellurium,Te
+455,Polonium,Po
+456,Radon,Rn
+457,Xenon,Xe
+458,Krypton,Kr
+459,Neon,Ne
+460,Lithium (Metal),Li
+461,Sodium (Metal),Na
+462,Potassium (Metal),K
+463,Calcium (Metal),Ca
+464,Magnesium (Metal),Mg
+465,Aluminum (Metal),Al
+466,Iron (Metal),Fe
+467,Copper (Metal),Cu
+468,Zinc (Metal),Zn
+469,Silver (Metal),Ag
+470,Gold (Metal),Au
+471,Platinum (Metal),Pt
+472,Mercury (Metal),Hg
+473,Tin (Metal),Sn
+474,Lead (Metal),Pb
+475,Carbon (Graphite),C
+476,Silicon (Element),Si
+477,Nitrogen (Element),N2
+478,Oxygen (Element),O2
+479,Fluorine (Element),F2
+480,White Phosphorus,P4
+481,Sulfur (Element),S8
+482,Iodine (Element),I2
+483,Bromine (Element),Br2
+484,Scandium (Metal),Sc
+485,Titanium (Metal),Ti
+486,Vanadium (Metal),V
+487,Chromium (Metal),Cr
+488,Manganese (Metal),Mn
+489,Cobalt (Metal),Co
+490,Nickel (Metal),Ni
+491,Gold (Element),Au
+492,Platinum (Element),Pt
+493,Mercury (Element),Hg
+494,Tin (Element),Sn
+495,Lead (Element),Pb
+496,Nitrogen Gas (Element),N2
+497,Oxygen Gas (Element),O2
+498,Hydrogen Gas (Element),H2
+499,Fluorine Gas (Element),F2
+500,White Phosphorus (Element),P4
+501,Isopropyl Alcohol,C3H8O
+502,n-Butanol,C4H9OH
+503,sec-Butanol,C4H9OH
+504,tert-Butanol,(CH3)3COH
+505,n-Pentanol,C5H11OH
+506,n-Hexanol,C6H13OH
+507,n-Heptanol,C7H15OH
+508,n-Octanol,C8H17OH
+509,Benzyl Alcohol,C7H8O
+510,Diethyl Ether,C4H10O
+511,Methyl tert-butyl Ether,C5H12O
+512,1 2-Dimethoxyethane,C4H10O2
+513,Ethyl Acetate,C4H8O2
+514,Butyl Acetate,C6H12O2
+515,Isoamyl Acetate,C7H14O2
+516,Propyl Acetate,C5H10O2
+517,2-Pentanone,C5H10O
+518,3-Hexanone,C6H12O
+519,Cyclohexanone,C6H10O
+520,Propionaldehyde,C3H6O
+521,Butyraldehyde,C4H8O
+522,Benzaldehyde,C7H6O
+523,Propionic Acid,C3H6O2
+524,Valeric Acid,C5H10O2
+525,Caproic Acid,C6H12O2
+526,Heptanoic Acid,C7H14O2
+527,Octanoic Acid,C8H16O2
+528,Nonanoic Acid,C9H18O2
+529,Decanoic Acid,C10H20O2
+530,Cinnamic Acid,C9H8O2
+531,Methylamine,CH3NH2
+532,Ethylamine,C2H5NH2
+533,Propylamine,C3H7NH2
+534,Butylamine,C4H9NH2
+535,Dimethylamine,(CH3)2NH
+536,Diethylamine,(C2H5)2NH
+537,Triethylamine,N(C2H5)3
+538,Formamide,HCONH2
+539,Benzamide,C7H7NO
+540,N-Methylformamide,C2H5NO
+541,Propionitrile,C3H5N
+542,Butyronitrile,C4H7N
+543,Valeronitrile,C5H9N
+544,Dimethyl Disulfide,C2H6S2
+545,Thiophene,C4H4S
+546,Benzothiophene,C8H6S
+547,Bromoform,CHBr3
+548,Iodoform,CHI3
+549,Trichloroethylene,C2HCl3
+550,1 2-Dichloroethane,C2H4Cl2
+551,1 1-Dichloroethane,C2H4Cl2
+552,Diethyl Phosphate,C4H11O4P
+553,Dimethyl Phosphate,C3H9O4P
+554,Trimethylphosphine,P(CH3)3
+555,Triethylaluminum,Al(C2H5)3
+556,Diborane,B2H6
+557,Trimethylborane,B(CH3)3
+558,Fluoranthene,C16H10
+559,Benzo[a]pyrene,C20H12
+560,Chrysene,C18H12
+561,Triphenylene,C18H12
+562,Quinoline,C9H7N
+563,Isoquinoline,C9H7N
+564,Pyrimidine,C4H4N2
+565,Pyrazine,C4H4N2
+566,Imidazole,C3H4N2
+567,Thiazole,C3H3NS
+568,Oxazole,C4H3NO
+569,Benzimidazole,C7H6N2
+570,Indole,C8H7N
+571,Carbazole,C12H9N
+572,Purine,C5H4N4
+573,Pyrrole,C4H5N
+574,Propionaldehyde,C3H6O
+575,Propionic Acid,C3H6O2
+576,Butyric Acid,C4H8O2
+577,Valeric Acid,C5H10O2
+578,Caproic Acid,C6H12O2
+579,Heptanoic Acid,C7H14O2
+580,Octanoic Acid,C8H16O2
+581,Nonanoic Acid,C9H18O2
+582,Decanoic Acid,C10H20O2
+583,Cinnamic Acid,C9H8O2
+584,Methylamine,CH3NH2
+585,Ethylamine,C2H5NH2
+586,Propylamine,C3H7NH2
+587,Butylamine,C4H9NH2
+588,Dimethylamine,(CH3)2NH
+589,Diethylamine,(C2H5)2NH
+590,Triethylamine,N(C2H5)3
+591,Formamide,HCONH2
+592,Benzamide,C7H7NO
+593,N-Methylformamide,C2H5NO
+594,Propionitrile,C3H5N
+595,Butyronitrile,C4H7N
+596,Valeronitrile,C5H9N
+597,Dimethyl Disulfide,C2H6S2
+598,Thiophene,C4H4S
+599,Benzothiophene,C8H6S
+600,1 2-Dichloroethane,C2H4Cl2
+601,o-Dichlorobenzene,C6H4Cl2
+602,Tetralin,C10H12
+603,Decalin,C10H18
+604,Ranitidine,C13H22N4O3S
+605,Cimetidine,C10H16N6S
+606,Loratadine,C22H23ClN2O2
+607,Cetirizine,C21H25ClN2O3
+608,Diphenhydramine,C17H21NO
+609,Fexofenadine,C32H39NO4
+610,Losartan,C22H23ClN6O
+611,Valsartan,C24H29N5O3
+612,Amlodipine,C20H25ClN2O5
+613,Metoprolol,C15H25NO3
+614,Rosuvastatin,C22H28FN3O6S
+615,Esomeprazole,C17H19N3O3S
+616,Celecoxib,C17H14F3N3O2S
+617,Montelukast,C35H36ClNO3S
+618,Salbutamol,C13H21NO3
+619,Budesonide,C25H34O6
+620,Estradiol,C18H24O2
+621,Progesterone,C21H30O2
+622,Testosterone,C19H28O2
+623,Dehydroepiandrosterone,C19H28O2
+624,Cortisone,C21H28O5
+625,Epinephrine,C9H13NO3
+626,Norepinephrine,C8H11NO3
+627,Ribose-6-phosphate,C6H13O9P
+628,Glucose-6-phosphate,C6H13O9P
+629,Ribulose-5-phosphate,C5H11O8P
+630,Adenosine Monophosphate,C10H14N5O7P
+631,Adenosine Diphosphate,C10H15N5O10P2
+632,Guanosine Triphosphate,C10H16N5O14P3
+633,Cytidine Triphosphate,C9H14N3O12P3
+634,Uridine Triphosphate,C9H15N2O14P3
+635,Polyethylene Terephthalate,(C10H8O4)n
+636,Polylactic Acid,(C3H4O2)n
+637,Polycarbonate,(C16H18O5)n
+638,Polyamide (Nylon-6),(C6H11NO)n
+639,Polyamide (Nylon-66),(C12H22N2O2)n
+640,Polymethyl Methacrylate,(C5O2H8)n
+641,Polyvinyl Alcohol,(C2H4O)n
+642,Polyacrylonitrile,(C3H3N)n
+643,Polypropylene Oxide,(C3H6O)n
+644,Zeise's Salt,K[PtCl3(C2H4)]·H2O
+645,Wilkinson's Catalyst,RhCl(PPh3)3
+646,Vaska's Complex,IrCl(CO)(PPh3)2
+647,Nickel Tetracarbonyl,Ni(CO)4
+648,Iron Pentacarbonyl,Fe(CO)5
+649,Molybdenum Hexacarbonyl,Mo(CO)6
+650,Tungsten Hexacarbonyl,W(CO)6
+651,Hydrofluoric Acid,HF
+652,Arsenic Acid,H3AsO4
+653,Selenic Acid,H2SeO4
+654,Lithium Amide,LiNH2
+655,Sodium Amide,NaNH2
+656,Magnesium Amide,Mg(NH2)2
+657,Potassium Isonitrosoacetate,C5H7NO3
+658,Mercury(II) Oxide,HgO
+659,Lead(II) Sulfide,PbS
+660,Copper(II) Sulfide,CuS
+661,Iron(II) Sulfide,FeS
+662,Silver Sulfide,Ag2S
+663,Urea Formaldehyde Resin,(CH2O·CH4N2)x
+664,Melamine,C3H6N6
+665,Phenol-Formaldehyde Resin,(C13H12O2)n
+666,Epoxy Resin (monomer unit),C21H25ClO5
+667,Hexacyanoferrate(III),[Fe(CN)6]3–
+668,Hexacyanoferrate(II),[Fe(CN)6]4–
+669,Hexachloroplatinate(IV),[PtCl6]2–
+670,Isopropyl Alcohol,C3H8O
+671,Dichlorobenzene (m-Xylene isomer),C6H4Cl2
+672,Ranitidine,C13H22N4O3S
+673,Cimetidine,C10H16N6S
+674,Loratadine,C22H23ClN2O2
+675,Cetirizine,C21H25ClN2O3
+676,Diphenhydramine,C17H21NO
+677,Fexofenadine,C32H39NO4
+678,Losartan,C22H23ClN6O
+679,Valsartan,C24H29N5O3
+680,Amlodipine,C20H25ClN2O5
+681,Metoprolol,C15H25NO3
+682,Rosuvastatin,C22H28FN3O6S
+683,Esomeprazole,C17H19N3O3S
+684,Celecoxib,C17H14F3N3O2S
+685,Montelukast,C35H36ClNO3S
+686,Salbutamol,C13H21NO3
+687,Budesonide,C25H34O6
+688,Estradiol,C18H24O2
+689,Progesterone,C21H30O2
+690,Testosterone,C19H28O2
+691,Dehydroepiandrosterone,C19H28O2
+692,Cortisone,C21H28O5
+693,Epinephrine,C9H13NO3
+694,Norepinephrine,C8H11NO3
+695,Estriol,C18H24O3
+696,Estrone,C18H22O2
+697,Dehydroepiandrosterone,C19H28O2
+698,Cortisone,C21H28O5
+699,Epinephrine,C9H13NO3
+700,Norepinephrine,C8H11NO3
+701,Cellulose Acetate,[(C6H7O2)(OCCH3)]n
+702,Inulin,(C6H10O5)n
+703,Glucuronic Acid,C6H10O7
+704,Galactose,C6H12O6
+705,Mannose,C6H12O6
+706,Xylose,C5H10O5
+707,Arabinose,C5H10O5
+708,Selenocysteine,C3H7NO2Se
+709,Pyrrolysine,C12H21N3O3
+710,Hydroxyproline,C5H9NO3
+711,Asparagine,C4H8N2O3
+712,Glutamine,C5H10N2O3
+713,Glutathione,C10H17N3O6S
+714,Oxytocin,C43H66N12O12S2
+715,Vasopressin,C46H65N15O12S2
+716,Thiamine (Vitamin B1),C12H17N4OS
+717,Riboflavin (Vitamin B2),C17H20N4O6
+718,Niacin (Vitamin B3),C6H5NO
+719,Pantothenic Acid (Vitamin B5),C9H17NO5
+720,Pyridoxine (Vitamin B6),C8H11NO3
+721,Biotin (Vitamin B7),C10H16N2O3S
+722,Folinic Acid,C20H23N7O6
+723,Folic Acid (Vitamin B9),C19H19N7O6
+724,Vitamin K1 (Phylloquinone),C31H46O2
+725,Vitamin K2 (Menaquinone),C46H64O2
+726,Vitamin A (Retinol),C20H30O
+727,Vitamin D2 (Ergocalciferol),C28H44O
+728,Estradiol,C18H24O2
+729,Progesterone,C21H30O2
+730,Testosterone,C19H28O2
+731,Dehydroepiandrosterone (DHEA),C19H28O2
+732,Cortisone,C21H28O5
+733,Epinephrine,C9H13NO3
+734,Norepinephrine,C8H11NO3
+735,Cholesterol,C27H46O
+736,Phosphatidylcholine,~C40H80NO8P
+737,Phosphatidylethanolamine,~C40H78NO8P
+738,Sphingomyelin,~C42H83N2O6P
+739,Tripalmitin,C57H110O6
+740,Oxaloacetic Acid,C4H4O5
+741,Malic Acid,C4H6O5
+742,Succinic Acid,C4H6O4
+743,Fumaric Acid,C4H4O4
+744,Pyruvic Acid,C3H4O3
+745,Acetylcarnitine,C9H17NO3
+746,Creatine,C4H9N3O2
+747,Creatinine,C4H7N3O
+748,Uric Acid,C5H4N4O3
+749,Theobromine,C7H8N4O2
+750,Theophylline,C7H8N4O2
+751,Bombykol,C16H32O
+752,Citral,C10H16O
+753,Farnesol,C15H26O
+754,Geranyl Acetate,C12H20O2
+755,Caprolactam,C6H11NO
+756,Polyvinylidene Chloride,(C2H2Cl2)n
+757,Guaiacol,C7H8O2
+758,Vanillic Acid,C8H8O4
+759,Syringic Acid,C9H10O5
+760,Anisole,C7H8O
+761,Safrole,C10H10O2
+762,Myristicin,C11H12O3
+763,Elemicin,C12H16O3
+764,Sodium Molybdate,Na2MoO4
+765,Ammonium Molybdate,(NH4)6Mo7O24·4H2O
+766,Sodium Tungstate,Na2WO4
+767,Ammonium Tungstate,(NH4)10W12O41
+768,Sodium Selenate,Na2SeO4
+769,Sodium Selenite,Na2SeO3
+770,Potassium Ferricyanide,K3[Fe(CN)6]
+771,Zirconyl Chloride,ZrOCl2
+772,Tin(II) Fluoride,SnF2
+773,Lead(II) Fluoride,PbF2
+774,Calcium Fluoride,CaF2
+775,Magnesium Fluoride,MgF2
+776,Lithium Fluoride,LiF
+777,Cesium Fluoride,CsF
+778,Dimethyl Sulfone,C2H6O2S
+779,Thioacetamide,C2H5NS
+780,Thiourea,CH4N2S
+781,Dithiothreitol,C4H10O2S2
+782,Cysteine,C3H7NO2S
+783,Homocysteine,C4H9NO2S
+784,Biuret,C4H6N2O2
+785,Cyanuric Acid,C3H3N3O3
+786,Barbituric Acid,C4H4N2O3
+787,Thiobarbituric Acid,C4H4N2O2S
+788,Resveratrol,C14H12O3
+789,Curcumin,C21H20O6
+790,Quercetin,C15H10O7
+791,Kaempferol,C15H10O6
+792,Luteolin,C15H10O6
+793,Genistein,C15H10O5
+794,Daidzein,C15H10O4
+795,Apigenin,C15H10O5
+796,Hesperidin,C28H34O15
+797,Naringin,C27H32O14
+798,Coenzyme Q10,C59H90O4
+799,NAD+,C21H27N7O14P2
+800,FAD,C27H33N9O15P2
+801,Coenzyme A,C21H36N7O16P3
+802,Biopterin,C9H11N5O3
+803,Tetrahydrobiopterin,C9H13N5O3
+804,Endosulfan,C9H6Cl6O3S
+805,Atrazine,C8H14ClN5
+806,Glyphosate,C3H8NO5P
+807,Parathion,C10H14NO5PS
+808,Malathion,C10H19O6PS2
+809,Carbaryl,C12H11NO2
+810,Imidacloprid,C9H10ClN5O2
+811,Chlorpyrifos,C9H11Cl3NO3PS
+812,Cypermethrin,C22H19Cl2NO3
+813,Deltamethrin,C22H19Br2NO3
+814,Ranitidine,C13H22N4O3S
+815,Cimetidine,C10H16N6S
+816,Loratadine,C22H23ClN2O2
+817,Cetirizine,C21H25ClN2O3
+818,Diphenhydramine,C17H21NO
+819,Fexofenadine,C32H39NO4
+820,Losartan,C22H23ClN6O
+821,Valsartan,C24H29N5O3
+822,Amlodipine,C20H25ClN2O5
+823,Metoprolol,C15H25NO3
+824,Rosuvastatin,C22H28FN3O6S
+825,Esomeprazole,C17H19N3O3S
+826,Celecoxib,C17H14F3N3O2S
+827,Montelukast,C35H36ClNO3S
+828,Salbutamol,C13H21NO3
+829,Budesonide,C25H34O6
+830,Estradiol,C18H24O2
+831,Progesterone,C21H30O2
+832,Testosterone,C19H28O2
+833,Dehydroepiandrosterone,C19H28O2
+834,Cortisone,C21H28O5
+835,Epinephrine,C9H13NO3
+836,Norepinephrine,C8H11NO3
+837,Estriol,C18H24O3
+838,Estrone,C18H22O2
+839,Cellulose Acetate,[(C6H7O2)(OCCH3)]n
+840,Inulin,(C6H10O5)n
+841,Glucuronic Acid,C6H10O7
+842,Galactose,C6H12O6
+843,Mannose,C6H12O6
+844,Xylose,C5H10O5
+845,Arabinose,C5H10O5
+846,Selenocysteine,C3H7NO2Se
+847,Pyrrolysine,C12H21N3O3
+848,Hydroxyproline,C5H9NO3
+849,Asparagine,C4H8N2O3
+850,Glutamine,C5H10N2O3
+851,Glutathione,C10H17N3O6S
+852,Oxytocin,C43H66N12O12S2
+853,Vasopressin,C46H65N15O12S2
+854,Thiamine (Vitamin B1),C12H17N4OS
+855,Riboflavin (Vitamin B2),C17H20N4O6
+856,Niacin (Vitamin B3),C6H5NO
+857,Pantothenic Acid (Vitamin B5),C9H17NO5
+858,Pyridoxine (Vitamin B6),C8H11NO3
+859,Biotin (Vitamin B7),C10H16N2O3S
+860,Folinic Acid,C20H23N7O6
+861,Folic Acid (Vitamin B9),C19H19N7O6
+862,Vitamin K1 (Phylloquinone),C31H46O2
+863,Vitamin K2 (Menaquinone),C46H64O2
+864,Vitamin A (Retinol),C20H30O
+865,Vitamin D2 (Ergocalciferol),C28H44O
+866,Estradiol,C18H24O2
+867,Progesterone,C21H30O2
+868,Testosterone,C19H28O2
+869,Dehydroepiandrosterone (DHEA),C19H28O2
+870,Cortisone,C21H28O5
+871,Epinephrine,C9H13NO3
+872,Norepinephrine,C8H11NO3
+873,Cholesterol,C27H46O
+874,Phosphatidylcholine,~C40H80NO8P
+875,Phosphatidylethanolamine,~C40H78NO8P
+876,Sphingomyelin,~C42H83N2O6P
+877,Tripalmitin,C57H110O6
+878,Oxaloacetic Acid,C4H4O5
+879,Malic Acid,C4H6O5
+880,Succinic Acid,C4H6O4
+881,Fumaric Acid,C4H4O4
+882,Pyruvic Acid,C3H4O3
+883,Acetylcarnitine,C9H17NO3
+884,Creatine,C4H9N3O2
+885,Creatinine,C4H7N3O
+886,Uric Acid,C5H4N4O3
+887,Theobromine,C7H8N4O2
+888,Theophylline,C7H8N4O2
+889,Bombykol,C16H32O
+890,Citral,C10H16O
+891,Farnesol,C15H26O
+892,Geranyl Acetate,C12H20O2
+893,Caprolactam,C6H11NO
+894,Polyvinylidene Chloride,(C2H2Cl2)n
+895,Guaiacol,C7H8O2
+896,Vanillic Acid,C8H8O4
+897,Syringic Acid,C9H10O5
+898,Anisole,C7H8O
+899,Safrole,C10H10O2
+900,Myristicin,C11H12O3
+901,Elemicin,C12H16O3
+902,Sodium Molybdate,Na2MoO4
+903,Ammonium Molybdate,(NH4)6Mo7O24·4H2O
+904,Sodium Tungstate,Na2WO4
+905,Ammonium Tungstate,(NH4)10W12O41
+906,Sodium Selenate,Na2SeO4
+907,Sodium Selenite,Na2SeO3
+908,Potassium Ferricyanide,K3[Fe(CN)6]
+909,Zirconyl Chloride,ZrOCl2
+910,Tin(II) Fluoride,SnF2
+911,Lead(II) Fluoride,PbF2
+912,Calcium Fluoride,CaF2
+913,Magnesium Fluoride,MgF2
+914,Lithium Fluoride,LiF
+915,Cesium Fluoride,CsF
+916,Dimethyl Sulfone,C2H6O2S
+917,Thioacetamide,C2H5NS
+918,Thiourea,CH4N2S
+919,Dithiothreitol,C4H10O2S2
+920,Cysteine,C3H7NO2S
+921,Homocysteine,C4H9NO2S
+922,Biuret,C4H6N2O2
+923,Cyanuric Acid,C3H3N3O3
+924,Barbituric Acid,C4H4N2O3
+925,Thiobarbituric Acid,C4H4N2O2S
+926,Resveratrol,C14H12O3
+927,Curcumin,C21H20O6
+928,Quercetin,C15H10O7
+929,Kaempferol,C15H10O6
+930,Luteolin,C15H10O6
+931,Genistein,C15H10O5
+932,Daidzein,C15H10O4
+933,Apigenin,C15H10O5
+934,Hesperidin,C28H34O15
+935,Naringin,C27H32O14
+936,Coenzyme Q10,C59H90O4
+937,NAD+,C21H27N7O14P2
+938,FAD,C27H33N9O15P2
+939,Coenzyme A,C21H36N7O16P3
+940,Biopterin,C9H11N5O3
+941,Tetrahydrobiopterin,C9H13N5O3
+942,Endosulfan,C9H6Cl6O3S
+943,Atrazine,C8H14ClN5
+944,Glyphosate,C3H8NO5P
+945,Parathion,C10H14NO5PS
+946,Malathion,C10H19O6PS2
+947,Carbaryl,C12H11NO2
+948,Imidacloprid,C9H10ClN5O2
+949,Chlorpyrifos,C9H11Cl3NO3PS
+950,Cypermethrin,C22H19Cl2NO3
+951,Deltamethrin,C22H19Br2NO3
+952,Ranitidine,C13H22N4O3S
+953,Cimetidine,C10H16N6S
+954,Loratadine,C22H23ClN2O2
+955,Cetirizine,C21H25ClN2O3
+956,Diphenhydramine,C17H21NO
+957,Fexofenadine,C32H39NO4
+958,Losartan,C22H23ClN6O
+959,Valsartan,C24H29N5O3
+960,Amlodipine,C20H25ClN2O5
+961,Metoprolol,C15H25NO3
+962,Rosuvastatin,C22H28FN3O6S
+963,Esomeprazole,C17H19N3O3S
+964,Celecoxib,C17H14F3N3O2S
+965,Montelukast,C35H36ClNO3S
+966,Salbutamol,C13H21NO3
+967,Budesonide,C25H34O6
+968,Estradiol,C18H24O2
+969,Progesterone,C21H30O2
+970,Testosterone,C19H28O2
+971,Dehydroepiandrosterone (DHEA),C19H28O2
+972,Cortisone,C21H28O5
+973,Epinephrine,C9H13NO3
+974,Norepinephrine,C8H11NO3
+975,Estriol,C18H24O3
+976,Estrone,C18H22O2
+977,Cellulose Acetate,[(C6H7O2)(OCCH3)]n
+978,Inulin,(C6H10O5)n
+979,Glucuronic Acid,C6H10O7
+980,Galactose,C6H12O6
+981,Mannose,C6H12O6
+982,Xylose,C5H10O5
+983,Arabinose,C5H10O5
+984,Selenocysteine,C3H7NO2Se
+985,Pyrrolysine,C12H21N3O3
+986,Hydroxyproline,C5H9NO3
+987,Asparagine,C4H8N2O3
+988,Glutamine,C5H10N2O3
+989,Glutathione,C10H17N3O6S
+990,Oxytocin,C43H66N12O12S
+991,Vasopressin,C46H65N15O12S
+992,Thiamine (Vitamin B1),C12H17N4OS
+993,Riboflavin (Vitamin B2),C17H20N4O6
+994,Niacin (Vitamin B3),C6H5NO
+995,Pantothenic Acid (Vitamin B5),C9H17NO5
+996,Pyridoxine (Vitamin B6),C8H11NO3
+997,Biotin (Vitamin B7),C10H16N2O3S
+998,Folinic Acid,C20H23N7O6
+999,Folic Acid (Vitamin B9),C19H19N7O6
+1000,Vitamin K1 (Phylloquinone),C31H46O2
+1001,Ethylenediamine,C2H8N2
+1002,Diethylene Glycol,C4H10O3
+1003,Triethylene Glycol,C6H14O4
+1004,Tetraethylene Glycol,C8H18O5
+1005,Polyethylene Glycol 400,(C2H4O)n
+1006,Solketal,C6H12O2
+1007,Diisopropyl Ether,C6H14O
+1008,Methyl Isobutyl Ketone,C6H12O
+1009,Cyclopentanone,C5H8O
+1010,Cyclopentanemethanol,C6H12O
+1011,Diethyl Carbonate,C5H10O3
+1012,Dimethyl Carbonate,C3H6O3
+1013,Ethylene Carbonate,C3H4O3
+1014,Propylene Carbonate,C4H6O3
+1015,Butylene Carbonate,C5H8O3
+1016,Bisphenol A,C15H16O2
+1017,Epichlorohydrin,C3H5ClO
+1018,Bisphenol F,C13H12O
+1019,4 4-Methylenedianiline,C13H14N2
+1020,Dicyandiamide,C2H4N4
+1021,Cyanuric Chloride,C3Cl3N3
+1022,1 3 5-Trichlorobenzene,C6H3Cl3
+1023,Pentachlorophenol,C6HCl5O
+1024,Hexachlorobenzene,C6Cl6
+1025,Decabromodiphenyl Ether,C12Br10O
+1026,Tetrabromobisphenol A,C15H12Br4O2
+1027,Nonylphenol,C15H24O
+1028,Octylphenol,C14H22O
+1029,Bis(2-ethylhexyl) Phthalate,C24H38O4
+1030,Di(2-ethylhexyl) Adipate,C26H50O4
+1031,Tributyl Phosphate,C12H27O4P
+1032,Trioctylamine,C24H51N
+1033,N N-Dimethyldodecylamine,C14H31N
+1034,Stearamide,C18H37NO
+1035,Lauramide,C12H25NO
+1036,Oleamide,C18H35NO
+1037,Palmitamide,C16H33NO
+1038,Ceramide,approx. C34H67NO3
+1039,Sphingosine,C18H37NO2
+1040,Phytosphingosine,C18H39NO3
+1041,Cholesteryl Palmitate,C45H80O2
+1042,Glyceryl Trioleate,C57H104O6
+1043,Lecithin,approx. C42H80NO8P
+1044,Choline,C5H14NO
+1045,Betaine,C5H11NO2
+1046,Taurine,C2H7NO3S
+1047,Ascorbyl Palmitate,C22H38O6
+1048,Retinyl Palmitate,C36H60O2
+1049,Beta-Carotene,C40H56
+1050,Lycopene,C40H56
+1051,Zeaxanthin,C40H56O2
+1052,Lutein,C40H56O2
+1053,Cyanidin,C15H11O6
+1054,Pterostilbene,C16H16O3
+1055,Geniposide,C17H24O10
+1056,Ginsenoside Rb1,C54H92O23
+1057,Demethoxycurcumin,C20H18O5
+1058,Bisdemethoxycurcumin,C19H16O4
+1059,Piperine,C17H19NO3
+1060,Capsaicin,C18H27NO3
+1061,Gingerol,C17H26O4
+1062,Menthol,C10H20O
+1063,Camphor,C10H16O
+1064,Eucalyptol,C10H18O
+1065,Limonene,C10H16
+1066,Pinene,C10H16
+1067,Geraniol,C10H18O
+1068,Citronellol,C10H20O
+1069,Linalool,C10H18O
+1070,Farnesene,C15H24
+1071,Bisabolene,C15H24
+1072,Caryophyllene,C15H24
+1073,Humulene,C15H24
+1074,Myrcene,C10H16
+1075,Sabinene,C10H16
+1076,Chlorogenic Acid,C16H18O9
+1077,Caffeic Acid,C9H8O4
+1078,p-Coumaric Acid,C9H8O3
+1079,Ferulic Acid,C10H10O4
+1080,Sinapic Acid,C11H12O5
+1081,Gallic Acid,C7H6O5
+1082,Ellagic Acid,C14H6O8
+1083,Protocatechuic Acid,C7H6O4
+1084,Vanillin,C8H8O3
+1085,Anethole,C10H12O
+1086,Estragole,C10H12O
+1087,Diallyl Disulfide,C6H10S2
+1088,Allicin,C6H10OS2
+1089,S-Allyl Cysteine,C6H11NO2S
+1090,Curcumol,C15H22O
+1091,Gossypol,C30H30O8
+1092,Artemisinin,C15H22O5
+1093,Chloroquine,C18H26ClN3
+1094,Hydroxychloroquine,C18H26ClN3O
+1095,Ivermectin,C48H74O14
+1096,Levofloxacin,C18H20FN3O4
+1097,Amikacin,C22H44N6O12
+1098,Gentamicin,C21H43N5O7
+1099,Tobramycin,C18H37N5O7
+1100,Vancomycin,C66H75Cl2N9O24
+1101,Bacitracin,approx. C66H103N17O16S
+1102,Penicillin V,C16H18N2O4S
+1103,Cephalexin,C16H17N3O4S
+1104,Ceftriaxone,C18H18N8O7S3
+1105,Meropenem,C17H25N3O5S
+1106,Imipenem,C12H17N3O4S
+1107,Clavulanic Acid,C8H9NO5
+1108,Acyclovir,C8H11N5O3
+1109,Valacyclovir,C13H20N6O4
+1110,Ganciclovir,C9H13N5O4
+1111,Foscarnet,H3PO3
+1112,Oseltamivir,C16H28N2O4
+1113,Zanamivir,C12H20N4O9
+1114,Ribavirin,C8H12N4O5
+1115,Sofosbuvir,C22H29FN3O9P
+1116,Daclatasvir,C40H53N9O5
+1117,Ledipasvir,C49H54F2N8O6
+1118,Simeprevir,C37H47N5O7S
+1119,Velpatasvir,C49H60N8O8
+1120,Ombitasvir,C48H57N9O8
+1121,Paritaprevir,C39H51N3O7S
+1122,Dasabuvir,C21H20F3N3O
+1123,Ritonavir,C37H48N6O5S2
+1124,Lopinavir,C37H48N4O5
+1125,Atazanavir,C38H62N6O4
+1126,Darunavir,C27H37N3O7S
+1127,Tipranavir,C31H31N3O7S
+1128,Efavirenz,C14H9ClF3NO2
+1129,Nevirapine,C12H12N4O
+1130,Abacavir,C19H19N3O3
+1131,Lamivudine,C8H11N3O3
+1132,Zidovudine,C10H13N5O4
+1133,Didanosine,C9H12N4O3
+1134,Stavudine,C10H12N2O5
+1135,Emtricitabine,C8H11FN3O3S
+1136,Tenofovir,C9H14N5O7P
+1137,Rilpivirine,C22H18ClF3N4
+1138,Enfuvirtide,Approx. Peptide
+1139,Maraviroc,C29H41N3O
+1140,Ibalizumab,Monoclonal Antibody
+1141,Alendronate,C4H11NO7P2
+1142,Risedronate,C7H11NO7P2
+1143,Zoledronic Acid,C5H10N2O7P2
+1144,Pamidronate,C4H11NO7P2
+1145,Ibandronate,C6H15NO7P2
+1146,Calcitriol,C27H44O3
+1147,Cholecalciferol,C27H44O
+1148,Ergocalciferol,C28H44O
+1149,Tretinoin,C20H28O2
+1150,Isotretinoin,C20H30O2
+1151,Acitretin,C21H26O3
+1152,Etretinate,C24H32O3
+1153,Tamoxifen,C26H29NO
+1154,Raloxifene,C28H27NO4S
+1155,Anastrozole,C17H19N5
+1156,Letrozole,C17H11N5
+1157,Exemestane,C20H24O2
+1158,Fulvestrant,C32H47F3O4S
+1159,Goserelin,C60H84N18O14
+1160,Leuprolide,C61H84N16O12
+1161,Buserelin,C66H84N18O14
+1162,Triptorelin,C64H82N18O11
+1163,Deslorelin,C66H80N18O10
+1164,GnRH,Peptide Hormone
+1165,Glucagon,C153H225N43O49
+1166,Somatostatin,C145H237N39O42
+1167,Growth Hormone,Peptide Hormone
+1168,Erythropoietin,Glycoprotein Hormone
+1169,Thyroxine,C15H11I4NO4
+1170,Triiodothyronine,C15H12I3NO4
+1171,IGF-1,Peptide Hormone
+1172,Cortisol,C21H30O5
+1173,Aldosterone,C21H28O5
+1174,Dopamine,C8H11NO2
+1175,Serotonin,C10H12N2O
+1176,Histamine,C5H9N3
+1177,Acetylcholine,C7H16NO2
+1178,GABA,C4H9NO2
+1179,Glutamate,C5H9NO4
+1180,Aspartate,C4H7NO4
+1181,Serine,C3H7NO3
+1182,Threonine,C4H9NO3
+1183,Histidine,C6H9N3O2
+1184,Orotic Acid,C5H4N2O4
+1185,Allantoin,C4H6N4O3
+1186,Paraxanthine,C7H8N4O2
+1187,Obacunone,C27H30O7
+1188,Limonin,C26H30O8
+1189,Xanthone,C13H8O2
+1190,Benzophenone,C13H10O
+1191,Anthraquinone,C14H8O2
+1192,Chrysophanol,C15H10O3
+1193,Emodin,C15H10O5
+1194,Aloe-emodin,C15H10O6
+1195,Rhein,C15H8O6
+1196,Lawsone,C10H6O3
+1197,Juglone,C10H6O3
+1198,Lapachol,C15H14O3
+1199,Plumbagin,C11H8O2
+1200,Shikonin,C16H16O5
+1201,β-Sitosterol,C29H50O
+1202,Stigmasterol,C29H48O
+1203,Campesterol,C28H48O
+1204,Lanosterol,C30H50O
+1205,Ergosterol,C28H44O
+1206,Cholesterol Glucoside,C33H56O6
+1207,β-Sitosterol Glucoside,C35H60O6
+1208,Campesterol Glucoside,C34H58O6
+1209,Stigmasterol Glucoside,C35H58O6
+1210,Luteolin-7-O-glucoside,C21H20O11
+1211,Quercetin-3-O-glucoside,C21H20O12
+1212,Kaempferol-3-O-glucoside,C21H20O11
+1213,Rutin,C27H30O16
+1214,Narirutin,C27H32O14
+1215,Poncirin,C28H34O15
+1216,Didymin,C21H22O10
+1217,Eriocitrin,C27H30O14
+1218,Diosmin,C28H32O15
+1219,Quercitrin,C21H20O11
+1220,Isoquercitrin,C21H20O11
+1221,Hyperoside,C21H20O12
+1222,Punicalagin,C48H28O30
+1223,Procyanidin B2,C30H26O12
+1224,Theaflavin,C29H24O12
+1225,Epigallocatechin Gallate,C22H18O11
+1226,Epicatechin,C15H14O6
+1227,Catechin,C15H14O6
+1228,Gallocatechin,C15H14O7
+1229,Procyanidin C1,C45H38O18
+1230,Reserpine,C33H40N2O9
+1231,Ajmalicine,C21H24N2O3
+1232,Yohimbine,C21H26N2O3
+1233,Clonidine,C9H9Cl2N3
+1234,Guanabenz,C14H19NO3
+1235,Guanfacine,C9H9Cl2N
+1236,Lisdexamfetamine,C15H25N
+1237,Amphetamine,C9H13N
+1238,Methamphetamine,C10H15N
+1239,MDMA,C11H15NO2
+1240,MDA,C10H13NO2
+1241,LSD,C20H25N3O
+1242,Ethylnorpropanolamine,C4H11NO
+1243,2-Methyl-2-butanol,C5H12O
+1244,1 3-Butanediol,C4H10O2
+1245,2 3-Butanediol,C4H10O2
+1246,1 2-Butanediol,C4H10O2
+1247,1 4-Butanediol,C4H10O2
+1248,2-Butanone,C4H8O
+1249,3-Hexanone,C6H12O
+1250,2-Heptanone,C7H14O
+1251,3-Octanone,C8H16O
+1252,Nonan-2-one,C9H18O
+1253,Decan-2-one,C10H20O
+1254,Undecane,C11H24
+1255,Dodecane,C12H26
+1256,Tridecane,C13H28
+1257,Tetradecane,C14H30
+1258,Pentadecane,C15H32
+1259,Hexadecane,C16H34
+1260,Heptadecane,C17H36
+1261,Octadecane,C18H38
+1262,Nonadecane,C19H40
+1263,Icosane,C20H42
+1264,2-Methylpropane,C4H10
+1265,Isobutane,C4H10
+1266,Neopentane,C5H12
+1267,1 1 1-Trichloropropane,C3H5Cl3
+1268,1 2 3-Trichloropropane,C3H5Cl3
+1269,1 1-Dichloroethane,C2H4Cl2
+1270,1 2-Dichloropropane,C3H6Cl2
+1271,1 3-Dichloropropane,C3H6Cl2
+1272,1 2-Dichlorobenzene,C6H4Cl2
+1273,1 4-Dichlorobenzene,C6H4Cl2
+1274,1 2 4-Trichlorobenzene,C6H3Cl3
+1275,1 3 5-Trichlorobenzene,C6H3Cl3
+1276,1 2 4 5-Tetrachlorobenzene,C6H2Cl4
+1277,1 2 3 4 5-Pentachlorobenzene,C6HCl5
+1278,Hexachlorobenzene,C6Cl6
+1279,Trichloroethylene,C2HCl3
+1280,Perchloroethylene,C2Cl4
+1281,Chloroform,CCl3H
+1282,Bromoform,CHBr3
+1283,Iodoform,CHI3
+1284,Carbon Tetrabromide,CBr4
+1285,Carbon Tetrachloride,CCl4
+1286,Phosgene,COCl2
+1287,Thionyl Chloride,SOCl2
+1288,Phosphorus Trichloride,PCl3
+1289,Phosphorus Pentachloride,PCl5
+1290,Arsine,AsH3
+1291,Stibine,SbH3
+1292,Hydrogen Selenide,H2Se
+1293,Hydrogen Telluride,H2Te
+1294,Silane,SiH4
+1295,Disilane,Si2H6
+1296,Trisilane,Si3H8
+1297,Dichlorosilane,SiH2Cl2
+1298,Tetrachlorosilane,SiCl4
+1299,Hexamethyldisiloxane,(CH3)3SiOSi(CH3)3
+1300,Octamethyltrisiloxane,(CH3)3SiO[Si(CH3)2O]Si(CH3)3
+1301,Hexamethylcyclotrisiloxane,(CH3)2SiO)3
+1302,Dimethyl Sulfoxide (DMSO),C2H6OS
+1303,Dimethyl Sulfone,C2H6O2S
+1304,Dimethyl Disulfide,C2H6S2
+1305,Dimethyl Trisulfide,C2H6S3
+1306,Carbon Diselenide,CSe2
+1307,Selenium Dioxide,SeO2
+1308,Tellurium Dioxide,TeO2
+1309,Boron Trifluoride,BF3
+1310,Boric Anhydride,B2O3
+1311,Silicon Tetrachloride,SiCl4
+1312,Silicon Tetrafluoride,SiF4
+1313,Phosphorus Pentoxide,P4O10
+1314,Sulfur Dichloride,SCl2
+1315,Sulfur Monochloride,S2Cl2
+1316,Chlorine Dioxide,ClO2
+1317,Sodium Hypophosphite,NaH2PO2
+1318,Sodium Metasilicate,Na2SiO3
+1319,Potassium Metabisulfite,K2S2O5
+1320,Potassium Bisulfite,KHSO3
+1321,Calcium Hypochlorite,Ca(OCl)2
+1322,Zinc Oxide,ZnO
+1323,Titanium Tetrachloride,TiCl4
+1324,Iron(II) Sulfate,FeSO4
+1325,Iron(III) Sulfate,Fe2(SO4)3
+1326,Copper(I) Chloride,CuCl
+1327,Copper(II) Sulfate Pentahydrate,CuSO4·5H2O
+1328,Sodium Stannate,Na2SnO3
+1329,Tin(II) Sulfate,SnSO4
+1330,Lead(II) Sulfate,PbSO4
+1331,Gold(III) Chloride,AuCl3
+1332,Platinum(IV) Chloride,PtCl4
+1333,Palladium(II) Chloride,PdCl2
+1334,Rhodium(III) Chloride,RhCl3
+1335,Iridium(III) Chloride,IrCl3
+1336,Osmium Tetroxide,OsO4
+1337,Rhenium(VII) Oxide,Re2O7
+1338,Tungsten Hexachloride,WCl6
+1339,Molybdenum Trioxide,MoO3
+1340,Uranium Hexafluoride,UF6
+1341,Plutonium Dioxide,PuO2
+1342,Zirconium Dioxide,ZrO2
+1343,Hafnium Chloride,HfCl4
+1344,Tantalum Pentoxide,Ta2O5
+1345,Niobium Pentoxide,Nb2O5
+1346,Boron Nitride,BN
+1347,Silicon Nitride,Si3N4
+1348,Titanium Nitride,TiN
+1349,Zirconium Nitride,ZrN
+1350,Vanadium(V) Oxide,V2O5
+1351,Chromium(III) Oxide,Cr2O3
+1352,Iron(II) Oxide,FeO
+1353,Cobalt(II) Oxide,CoO
+1354,Nickel(II) Oxide,NiO
+1355,Copper(II) Oxide,CuO
+1356,Zinc Chromate,ZnCrO4
+1357,Bismuth Oxide,Bi2O3
+1358,Lead(II) Oxide,PbO
+1359,Mercury(I) Chloride,Hg2Cl2
+1360,Cadmium Sulfide,CdS
+1361,Cadmium Selenide,CdSe
+1362,Selenium,Se
+1363,Tellurium,Te
+1364,Polonium,Po
+1365,Radon,Rn
+1366,Xenon,Xe
+1367,Krypton,Kr
+1368,Neon,Ne
+1369,Lithium (Metal),Li
+1370,Sodium (Metal),Na
+1371,Potassium (Metal),K
+1372,Calcium (Metal),Ca
+1373,Magnesium (Metal),Mg
+1374,Aluminum (Metal),Al
+1375,Iron (Metal),Fe
+1376,Copper (Metal),Cu
+1377,Zinc (Metal),Zn
+1378,Silver (Metal),Ag
+1379,Gold (Metal),Au
+1380,Platinum (Metal),Pt
+1381,Mercury (Metal),Hg
+1382,Tin (Metal),Sn
+1383,Lead (Metal),Pb
+1384,Carbon (Graphite),C
+1385,Silicon,Si
+1386,Nitrogen Gas,N2
+1387,Oxygen Gas,O2
+1388,Fluorine Gas,F2
+1389,White Phosphorus,P4
+1390,Sulfur (Element),S8
+1391,Iodine,I2
+1392,Bromine,Br2
+1393,Scandium,Sc
+1394,Titanium,Ti
+1395,Vanadium,V
+1396,Chromium,Cr
+1397,Manganese,Mn
+1398,Cobalt,Co
+1399,Nickel,Ni
+1400,Gold,Au
+1401,Platinum,Pt
+1402,Mercury,Hg
+1403,Tin,Sn
+1404,Lead,Pb
+1405,Neon,Ne
+1406,Ethylene Diamine,C2H8N2
+1407,Diethylene Glycol Monobutyl Ether,C8H18O2
+1408,Triethylene Glycol Monomethyl Ether,C7H16O3
+1409,2-Methyl-2-propanol,(CH3)3COH
+1410,1-Butanol,C4H9OH
+1411,2-Butanol,C4H9OH
+1412,tert-Amyl Alcohol,C5H11OH
+1413,1-Hexanol,C6H13OH
+1414,2-Hexanone,C6H12O
+1415,2-Heptanone,C7H14O
+1416,3-Octanone,C8H16O
+1417,Nonane,C9H20
+1418,Decane,C10H22
+1419,Undecane,C11H24
+1420,Dodecane,C12H26
+1421,Tridecane,C13H28
+1422,Tetradecane,C14H30
+1423,Pentadecane,C15H32
+1424,Hexadecane,C16H34
+1425,Heptadecane,C17H36
+1426,Octadecane,C18H38
+1427,Nonadecane,C19H40
+1428,Icosane,C20H42
+1429,2-Methylpentane,C6H14
+1430,3-Methylpentane,C6H14
+1431,3-Methylhexane,C7H16
+1432,2 2-Dimethylpropane,C5H12
+1433,2 3-Dimethylbutane,C6H14
+1434,Neopentane,C5H12
+1435,Isooctane,C8H18
+1436,2 2 4-Trimethylpentane,C8H18
+1437,1 3 5-Trioxane,(CH2O)3
+1438,Paraformaldehyde,(CH2O)n
+1439,Polyvinyl Chloride,(C2H3Cl)n
+1440,Polystyrene,(C8H8)n
+1441,Polypropylene,(C3H6)n
+1442,Polyethylene,(C2H4)n
+1443,Polycarbonate,(C16H18O5)n
+1444,Polyvinyl Alcohol,(C2H4O)n
+1445,Polyacrylonitrile,(C3H3N)n
+1446,Polymethyl Methacrylate,(C5O2H8)n
+1447,Polyamide (Nylon-6),(C6H11NO)n
+1448,Polyamide (Nylon-66),(C12H22N2O2)n
+1449,Polyethylene Terephthalate,(C10H8O4)n
+1450,Polylactic Acid,(C3H4O2)n
+1451,Silicone Oil,[(CH3)2SiO]n
+1452,Polydimethylsiloxane,[(CH3)2SiO]n
+1453,Fluorosilicone,[(CH3)(CF3)SiO]n
+1454,Perfluorohexane,C6F14
+1455,Perfluorooctane,C8F18
+1456,Perfluorodecalin,C10F18
+1457,Chlorofluorocarbon-11,CCl3F
+1458,Chlorofluorocarbon-12,CCl2F2
+1459,Hydrofluorocarbon-134a,C2H2F4
+1460,Hydrofluorocarbon-125,C2HF5
+1461,Hydrofluorocarbon-227ea,C3HF7
+1462,Octafluorocyclobutane,C4F8
+1463,Hexafluorobenzene,C6F6
+1464,Tetrafluoromethane,CF4
+1465,Hexafluoroethane,C2F6
+1466,Octafluoroethane,C2F8
+1467,Decafluoropentane,C5F10
+1468,Perfluorotributylamine,C12F27N
+1469,Tris(2 2 2-trifluoroethyl) Phosphate,C6H6F9O4P
+1470,Di(2-ethylhexyl) Phthalate,C24H38O4
+1471,Diisononyl Phthalate,C36H62O4
+1472,Di(2-ethylhexyl) Adipate,C26H50O4
+1473,Triphenyl Phosphate,C18H15O4P
+1474,Tris(2-chloroethyl) Phosphate,C6H12Cl3O4P
+1475,Hexabromocyclododecane,C12H18Br6
+1476,Decabromodiphenyl Ether,C12Br10O
+1477,Polybrominated Diphenyl Ethers,(C12H(10−x)BrxO
+
