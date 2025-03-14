@@ -34,12 +34,9 @@ db = client["chemar"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # **Initialize Azure OpenAI Client**
-endpoint = os.getenv("ENDPOINT_URL", "https://chemar-intelligence.openai.azure.com/")  
-deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4")  
-search_endpoint = os.getenv("SEARCH_ENDPOINT", "https://chamar-ai-search.search.windows.net")  
-search_key = os.getenv("SEARCH_KEY", "8oVmprmclNQH8B23GhQg6mxLY7yX1iOsdv6id5WdOCAzSeDbaVBq")
-search_index = os.getenv("SEARCH_INDEX_NAME", "chemar")  
-subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "1k1KCMAv9JC2febmc9TaURIWjv3WkD5nphxZPuIeAdq7Afj5QqGJJQQJ99BCAC77bzfXJ3w3AAAAACOGuDRz")  # Set this in environment variables
+endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/o3-mini/chat/completions?api-version=2024-02-15-preview")  
+deployment = os.getenv("DEPLOYMENT_NAME", "o3-mini")
+subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj")  # Set this in environment variables
 
 openai_client = AzureOpenAI(
     azure_endpoint=endpoint,
@@ -291,15 +288,14 @@ Analyze the provided chemical compound description and image (if available), and
 }
 
 Important rules:
-1. Give unique IDs to atoms (e.g., C1, C2, O1, H1, H2)
-2. Positional coordinates should be scaled to range 0 to 0.6
-3. List all relevant bonds and bond angles
-4. Add a clear chemical description
-5. Include all relevant functional groups
-6. Show all elements and their positions
-7. Do not truncate any data
-8. Do not return anything other than JSON
-9. Make aure all the elements are bonded with the main chain and you return only one main chain
+1. Assign unique IDs to all atoms (e.g., C1, C2, O1, H1, H2).
+2. For "position", assign 3D coordinates based on standard bond lengths (e.g., C-H: 1.09 Å, O-H: 0.96 Å) and bond angles (e.g., 109.5° for sp3, 120° for sp2). Scale the coordinates so that for each axis (x, y, z), the minimum value is mapped to 0 and the maximum to 0.6, preserving relative distances within each axis.
+3. For "hybridization", use 'sp3', 'sp2', 'sp', etc., for atoms like carbon, nitrogen, and oxygen where applicable; use 's' for hydrogen.
+4. For "bonds", list all connections with "bond_type" as 'single', 'double', or 'triple'. Set "plane" to 'horizontal' if the bond is primarily in the xy-plane (i.e., |z2 - z1| < 0.1 * max(|x2 - x1|, |y2 - y1|) in original coordinates), else 'vertical'. For "angle", calculate the angle in radians of the bond's projection onto the xy-plane from the positive x-axis using atan2(dy, dx) where dy = y2 - y1, dx = x2 - x1. For "length", provide the bond length in angstroms before scaling.
+5. Identify and list all relevant functional groups (e.g., hydroxyl, carboxyl) based on the structure.
+6. For "molecular_geometry", specify the shape (e.g., 'bent', 'tetrahedral') for small molecules or central atoms, and list all bond angles between sets of three connected atoms in degrees.
+7. Ensure all atoms are part of a single, connected molecular structure.
+8. Do not truncate any data and return only the JSON object without additional text.
 """
 
 # **Generate Chemical Compound Data Function**
