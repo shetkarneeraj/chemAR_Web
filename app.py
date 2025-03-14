@@ -384,10 +384,10 @@ def model():
     """API endpoint to generate chemical compound data."""
     prompt = request.json
     if prompt.get("code") == "chemar2602":
-        description = prompt.get("description")
-        image_base64 = prompt.get("image_base64")
+        description = prompt.get("text")
+        image_base64 = prompt.get("image")
         collection = db['chemar']
-        existing_entry = collection.find_one({"prompt": description})
+        existing_entry = collection.find_one({"prompt": description.lower()})
         if existing_entry:
             return json.loads(existing_entry["response"])
         else:
