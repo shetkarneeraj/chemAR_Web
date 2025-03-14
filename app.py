@@ -34,14 +34,14 @@ db = client["chemar"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # **Initialize Azure OpenAI Client**
-endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/o1/chat/completions?api-version=2024-02-15-preview")  
-deployment = os.getenv("DEPLOYMENT_NAME", "o1")
-subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj")
+endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview")  
+deployment = os.getenv("DEPLOYMENT_NAME", "gpt-4o")  
+subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj") 
 
-openai_client = AzureOpenAI(
-    azure_endpoint=endpoint,
-    api_key=subscription_key,
-    api_version="2024-12-01-preview",
+openai_client = AzureOpenAI(  
+    azure_endpoint=endpoint,  
+    api_key=subscription_key,  
+    api_version="2024-05-01-preview",
 )
 
 # **PDF Processing Function**
@@ -300,36 +300,41 @@ Important rules:
 
 # **Generate Chemical Compound Data Function**
 def generate(description: str, image_base64: Optional[str] = None) -> str:
-    """Generate chemical compound data using Azure OpenAI."""
-    # Generate embedding and query MongoDB for similar documents
+    # Convert the description into a vector embedding
     query_embedding = embedding_model.encode(description).tolist()
+    
+    # Access the MongoDB collection
     collection = db["docs"]
+    
+    # Updated pipeline using $vectorSearch for vector search index
+    # Updated pipeline with numCandidates parameter
     pipeline = [
         {
-            "$search": {
-                "index": "vector_index",  # Replace with your actual vector search index name
-                "knnBeta": {
-                    "vector": query_embedding,
-                    "path": "embedding",
-                    "k": 10
-                }
+            "$vectorSearch": {
+                "index": "vector_index",
+                "path": "embedding",
+                "queryVector": query_embedding,
+                "numCandidates": 100,  # Added required parameter
+                "limit": 5
             }
         },
         {
             "$project": {
                 "text": 1,
-                "score": {"$meta": "searchScore"}
+                "score": {"$meta": "vectorSearchScore"}
             }
         }
     ]
+    
+    # Execute the aggregation pipeline
     similar_docs = list(collection.aggregate(pipeline))
-
+    
     # Build context from similar documents
     context = ""
     for doc in similar_docs:
         context += f"Similar Document: {doc['text']}\nSimilarity Score: {doc['score']}\n\n"
-
-    # Construct user message based on presence of image
+    
+    # Prepare user content based on whether an image is provided
     if image_base64:
         text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
         user_content = [
@@ -339,28 +344,27 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     else:
         text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description."
         user_content = [{"type": "text", "text": text_part}]
-
-    # Construct messages for the API call
+    
+    # Construct the message for the OpenAI API
     messages = [
         {"role": "system", "content": [{"type": "text", "text": system_message}]},
         {"role": "user", "content": user_content}
     ]
 
-    # Generate completion using Azure OpenAI
-    completion = openai_client.chat.completions.create(
+    # Call the OpenAI API
+    completion = openai_client.chat.completions.create(  
         model=deployment,
         messages=messages,
-        max_tokens=4000,
-        temperature=0.7,
-        top_p=0.95,
-        frequency_penalty=0,
+        max_tokens=800,  
+        temperature=0.7,  
+        top_p=0.95,  
+        frequency_penalty=0,  
         presence_penalty=0,
-        stop=None,
-        stream=False,
-        response_format={"type": "json_object"}
+        stop=None,  
+        stream=False
     )
-
-    # Return the response text
+    
+    # Return the response content
     return completion.choices[0].message.content
 
 # **Get Compound Data Function**
@@ -380,20 +384,21 @@ def model():
     """API endpoint to generate chemical compound data."""
     prompt = request.json
     if prompt.get("code") == "chemar2602":
-        description = prompt.get("text")
-        image_base64 = prompt.get("image")  # Optional base64-encoded image
-        response = get_compound_data(description, image_base64)
-        print(response)
-        
-        # Save prompt and response to MongoDB
-        db = client['chemar']
+        description = prompt.get("description")
+        image_base64 = prompt.get("image_base64")
         collection = db['chemar']
-        document = {
-            "prompt": description,
-            "response": response
-        }
-        collection.insert_one(document)
-        return response
+        existing_entry = collection.find_one({"prompt": description})
+        if existing_entry:
+            return json.loads(existing_entry["response"])
+        else:
+            # Generate new response
+            response = get_compound_data(description, image_base64)
+            document = {
+                "prompt": description.lower(),
+                "response": response
+            }
+            collection.insert_one(document)
+            return response
     else:
         return "Invalid code"
 
