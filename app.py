@@ -34,9 +34,9 @@ db = client["chemar"]
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # **Initialize Azure OpenAI Client**
-endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/o3-mini/chat/completions?api-version=2024-02-15-preview")  
-deployment = os.getenv("DEPLOYMENT_NAME", "o3-mini")
-subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj")  # Set this in environment variables
+endpoint = os.getenv("ENDPOINT_URL", "https://neera-m88lu2ej-eastus2.openai.azure.com/openai/deployments/o1/chat/completions?api-version=2024-02-15-preview")  
+deployment = os.getenv("DEPLOYMENT_NAME", "o1")
+subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisORBQ3oFl68XIKIr4LrIVWeLehjfJQQJ99BCACHYHv6XJ3w3AAAAACOGoQJj")
 
 openai_client = AzureOpenAI(
     azure_endpoint=endpoint,
