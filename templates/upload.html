@@ -1,42 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Upload PDF</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .message {
-            padding: 10px;
-            margin: 10px 0;
-        }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-    </style>
 </head>
 <body>
-    <h1>Upload PDF for RAG</h1>
-    <p>Upload a PDF file to process it into chunks for Retrieval-Augmented Generation.</p>
-    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".pdf" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="Upload">
-    </form>
+    <!-- Display flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            {% for category, message in messages %}
-                <div class="message {{ category }}">{{ message }}</div>
-            {% endfor %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
     {% endwith %}
-    <a href="{{ url_for('index') }}">Back to Home</a>
+
+    <!-- Show form if token is valid, otherwise show error -->
+    {% if valid %}
+        <h1>Upload PDF</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="token" value="{{ token }}">
+            <input type="file" name="file" accept=".pdf">
+            <input type="submit" value="Upload PDF">
+        </form>
+    {% else %}
+        <p>Invalid or expired link. Please use the link provided in the email.</p>
+    {% endif %}
 </body>
 </html>

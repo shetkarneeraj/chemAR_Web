@@ -22,7 +22,8 @@ import uuid
 
 # **Initialize Flask App**
 app = Flask(__name__)
-app.secret_key = "your_secret_key"
+app.secret_key = "your_secret_key"  # Replace with a secure secret key
+limiter = Limiter(get_remote_address, app=app, default_limits=["5 per minute"])
 
 # **Setup MongoDB**
 uri = "mongodb+srv://neerajshetkar:29gx0gMglCCyhdff@cluster0.qfkfv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -101,9 +102,11 @@ def upload():
     if request.method == 'GET':
         token = request.args.get('token')  # Get token from URL query parameter
         if token and token == gibbrish_text:
+            # Render form with token if valid
             return render_template('upload.html', token=token, valid=True)
         else:
-            return redirect(url_for('upload'))
+            # Show error if token is missing or invalid
+            return render_template('upload.html', valid=False)
     
     elif request.method == 'POST':
         token = request.form.get('token')  # Get token from form data
@@ -189,6 +192,7 @@ def send_email(first_name: str, last_name: str, email: str, message: str):
 
 # **Contact Route**
 @app.route("/contact/", methods=["POST"])
+@limiter.limit("5 per minute")
 def contact():
     """Handle contact form submissions."""
     form = ContactForm()
