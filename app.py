@@ -307,11 +307,11 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     pipeline = [
         {
             "$search": {
-                "index": "your_vector_search_index",  # Replace with your actual vector search index name
+                "index": "vector_index",  # Replace with your actual vector search index name
                 "knnBeta": {
                     "vector": query_embedding,
                     "path": "embedding",
-                    "k": 5
+                    "k": 10
                 }
             }
         },
