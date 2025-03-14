@@ -41,7 +41,7 @@ subscription_key = os.getenv("AZURE_OPENAI_API_KEY", "FLNn2XHkITAP4ukuMMUPC5QisO
 openai_client = AzureOpenAI(
     azure_endpoint=endpoint,
     api_key=subscription_key,
-    api_version="2024-05-01-preview",
+    api_version="2024-12-01-preview",
 )
 
 # **PDF Processing Function**
