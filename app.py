@@ -19,10 +19,12 @@ import io
 from sentence_transformers import SentenceTransformer
 import datetime
 import uuid
+from google import genai
+from google.genai import types
 
 # **Initialize Flask App**
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Replace with a secure secret key
+app.secret_key = "your_secret_key"
 limiter = Limiter(get_remote_address, app=app, default_limits=["5 per minute"])
 
 # **Setup MongoDB**
@@ -338,33 +340,65 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     for doc in similar_docs:
         context += f"Similar Document: {doc['text']}\nSimilarity Score: {doc['score']}\n\n"
     
-    # Prepare user content based on whether an image is provided
-    if image_base64:
-        text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
-        user_content = [
-            {"type": "text", "text": text_part},
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}}
-        ]
-    else:
-        text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description."
-        user_content = [{"type": "text", "text": text_part}]
+    # # Prepare user content based on whether an image is provided
+    # if image_base64:
+    #     text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
+    #     user_content = [
+    #         {"type": "text", "text": text_part},
+    #         {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}}
+    #     ]
+    # else:
+    #     text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description."
+    #     user_content = [{"type": "text", "text": text_part}]
     
-    # Construct the message for the OpenAI API
-    messages = [
-        {"role": "system", "content": [{"type": "text", "text": system_message}]},
-        {"role": "user", "content": user_content}
-    ]
+    # # Construct the message for the OpenAI API
+    # messages = [
+    #     {"role": "system", "content": [{"type": "text", "text": system_message}]},
+    #     {"role": "user", "content": user_content}
+    # ]
 
-    # Call the OpenAI API
-    completion = openai_client.chat.completions.create(  
-        model=deployment,
-        messages=messages,
-        max_completion_tokens=40000,
-        stop=None,  
-        stream=False
+    # # Call the OpenAI API
+    # completion = openai_client.chat.completions.create(  
+    #     model=deployment,
+    #     messages=messages,
+    #     max_completion_tokens=40000,
+    #     stop=None,  
+    #     stream=False
+    # )
+    # # Return the response content
+    # return completion.to_json()
+
+    answer = ""
+
+    client = genai.Client(
+        api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
     )
-    # Return the response content
-    return completion.to_json()
+
+    model = "gemini-2.0-pro-exp-02-05"
+    text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=system_message+text_part),
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        temperature=2.0,
+        top_p=0.95,
+        top_k=40,
+        max_output_tokens=16834,
+        response_mime_type="application/json",
+    )
+
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        answer += chunk.text + ""
+    return answer
 
 # **Get Compound Data Function**
 def get_compound_data(description: str, image_base64: Optional[str] = None) -> Optional[str]:
@@ -391,12 +425,20 @@ def model():
         else:
             # Generate new response
             response = get_compound_data(description, image_base64)
-            answer = json.loads(json.loads(response)["choices"][0]["message"]["content"])
-            document = {
-                "prompt": description.lower(),
-                "response": answer
-            }
-            collection.insert_one(document)
+            # answer = json.loads(json.loads(response)["choices"][0]["message"]["content"])
+            answer = json.loads(response)
+            if description.lower() != answer["name"].lower():
+                document = {
+                    "prompt": description.lower(),
+                    "response": answer
+                }
+                collection.insert_one(document)
+            else:
+                document = {
+                    "prompt": answer["name"].lower(),
+                    "response": answer
+                }
+                collection.insert_one(document)
             return answer
     else:
         return "Invalid code"
