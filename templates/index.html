@@ -173,7 +173,7 @@
               </div>
               AI Features
             </dt>
-            <dd class="mt-2 text-base leading-7 text-gray-300">Generate molecule structures in AR with latest Gemini 2.0 model.</dd>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Generate molecule structures in AR with Gemini 2.0</dd>
           </div>
           <div class="relative pl-16">
             <dt class="text-base font-semibold leading-7 text-white">
@@ -243,15 +243,40 @@
     </div>
     <div class="py-10"></div> <!-- Added padding between divs -->
     <div class="mx-auto max-w-7xl lg:px-8">
-      <div class="mx-auto max-w-2xl lg:text-center">
-        <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Large language model</p>
-        <p class="mt-6 text-lg leading-8 text-gray-300">Used for generating the 3D models</p>
+      <div class="mx-auto max-w-2xl lg:text-center mb-12">
+      <h2 class="text-base font-semibold leading-7 text-indigo-600">Powered by</h2>
+      <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Our Technology Stack</p>
       </div>
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-10">
-        <div class="flex flex-col items-center">
-          <img src="/static/gemini.png" alt="Swift" class="mx-auto h-24">
-          <a href="https://gemini.google.com/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Gemini 2.0 Flash</a>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- LLM Section -->
+      <div>
+        <div class="text-center mb-6">
+        <h3 class="text-2xl font-bold tracking-tight text-white">Large Language Models</h3>
+        <p class="mt-2 text-gray-300">Used for generating 3D molecular structures</p>
         </div>
+        <div class="flex flex-col items-center">
+        <img src="/static/gemini.png" alt="ChatGPT" class="mx-auto h-24">
+        <a href="https://gemini.google.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Google Gemini 2.0</a>
+        </div>
+      </div>
+      
+      <!-- Cloud Services Section -->
+      <div>
+        <div class="text-center mb-6">
+        <h3 class="text-2xl font-bold tracking-tight text-white">Cloud Services</h3>
+        <p class="mt-2 text-gray-300">Infrastructure and AI capabilities</p>
+        </div>
+        <div class="grid grid-cols-2 gap-8">
+        <div class="flex flex-col items-center">
+          <img src="/static/azure.svg" alt="Microsoft Azure" class="mx-auto h-24">
+          <a href="https://azure.microsoft.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Microsoft Azure</a>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src="/static/mongo.png" alt="MongoDB" class="mx-auto h-24">
+          <a href="https://www.mongodb.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">MongoDB</a>
+        </div>
+        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -422,7 +447,7 @@
       
       <h3 class="text-xl font-semibold text-white">LLM Model & AI Outputs</h3>
       <p>
-        chemAR utilizes the Gemini 2.0 Flash Lite LLM model to generate AI-driven responses. Users are advised that AI-generated answers
+        chemAR utilizes the Gemini 2.0 LLM model to generate AI-driven responses. Users are advised that AI-generated answers
         may not always be accurate, and discretion is advised. The stored data is used solely for research purposes and not for any
         commercial or marketing activities.
       </p>
