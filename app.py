@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired, Email
@@ -371,10 +371,10 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     answer = ""
 
     client = genai.Client(
-        api_key = "AIzaSyAb4TTvJNOcSeZe4BgwvUrBgUQeAoYvNXI",
+        api_key = "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ",
     )
 
-    model = "gemini-2.0-pro-exp-02-05"
+    model = "gemini-2.0-flash"
     text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
     contents = [
         types.Content(
@@ -410,38 +410,131 @@ def get_compound_data(description: str, image_base64: Optional[str] = None) -> O
         print(f"Error: {str(e)}")
         return None
 
-# **Model API Route**
+
+@app.route('/api/context', methods=['POST'])
+def get_context():
+    """Retrieve and concatenate text from MongoDB based on query vector search."""
+    # Get the JSON payload
+    prompt = request.json
+    if not prompt or 'query' not in prompt:
+        return jsonify({"error": "Query is required"}), 400
+
+    query = prompt['query']
+    
+    try:
+        # Convert query to vector embedding
+        query_embedding = embedding_model.encode(query).tolist()
+        
+        # Access MongoDB collection
+        collection = db["docs"]
+        
+        # Vector search pipeline
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": "vector_index",
+                    "path": "embedding",
+                    "queryVector": query_embedding,
+                    "numCandidates": 100,
+                    "limit": 5
+                }
+            },
+            {
+                "$project": {
+                    "text": 1,
+                    "_id": 0
+                }
+            }
+        ]
+        
+        # Execute the pipeline
+        similar_docs = list(collection.aggregate(pipeline))
+        
+        # Concatenate all document texts
+        context = "".join(doc['text'] for doc in similar_docs)
+        
+        return jsonify({"context": context})
+    except Exception as e:
+        return jsonify({"error": f"Failed to retrieve context: {str(e)}"}), 500
+
+
 @app.route('/api/model', methods=['POST'])
 def model():
     """API endpoint to generate chemical compound data."""
+    # Get the JSON payload
     prompt = request.json
-    if prompt.get("code") == "chemar2602":
-        description = prompt.get("text")
-        image_base64 = prompt.get("image")
-        collection = db['chemar']
-        existing_entry = collection.find_one({"prompt": description.lower().strip()})
-        if existing_entry:
-            return existing_entry['response']
-        else:
-            # Generate new response
-            response = get_compound_data(description, image_base64)
-            # answer = json.loads(json.loads(response)["choices"][0]["message"]["content"])
+    if not prompt or prompt.get("code") != "chemar2602":
+        return jsonify({"error": "Invalid code"}), 403
+
+    # Extract description and image
+    description = prompt.get("text")
+    image_base64 = prompt.get("image")
+    if not description:
+        return jsonify({"error": "Description is required"}), 400
+
+    # Access MongoDB collection
+    collection = db['chemar']
+    existing_entry = collection.find_one({"prompt": description.lower().strip()})
+    if existing_entry:
+        # Handle existing entry from MongoDB
+        answer = existing_entry['response']
+        # If it's a string, parse it to a dictionary
+        if isinstance(answer, str):
+            try:
+                answer = json.loads(answer)
+            except json.JSONDecodeError:
+                return jsonify({"error": "Invalid JSON in database"}), 500
+        # Ensure it's a dictionary
+        if not isinstance(answer, dict):
+            return jsonify({"error": "Invalid data format in database"}), 500
+        return jsonify(answer)
+
+    # Generate new response if no existing entry
+    response = get_compound_data(description, image_base64)
+    if response is None:
+        return jsonify({"error": "Failed to generate compound data"}), 500
+
+    # Parse the response into a dictionary
+    try:
+        # First attempt with safe_json_extract
+        answer = safe_json_extract(response)
+        print(answer)
+        if isinstance(answer, str):
+            # If safe_json_extract returns a string, parse it
+            answer = json.loads(answer)
+        elif answer is None:
+            # If safe_json_extract fails, try parsing response directly
             answer = json.loads(response)
-            if description.lower() != answer["name"].lower():
-                document = {
-                    "prompt": description.lower(),
-                    "response": answer
-                }
-                collection.insert_one(document)
-            else:
-                document = {
-                    "prompt": answer["name"].lower(),
-                    "response": answer
-                }
-                collection.insert_one(document)
-            return answer
-    else:
-        return "Invalid code"
+    except (json.JSONDecodeError, TypeError):
+        return jsonify({"error": "Invalid JSON response from generate"}), 500
+
+    # Validate that answer is a dictionary
+    if not isinstance(answer, dict):
+        return jsonify({"error": "Invalid data format from generate"}), 500
+
+    # Store in MongoDB
+    try:
+        if description.lower() == answer["name"].lower():
+            document = {
+                "prompt": description.lower(),
+                "response": answer
+            }
+            collection.insert_one(document)
+        else:
+            # Store under both description and name as prompts
+            document_prompt = {
+                "prompt": description.lower(),
+                "response": answer
+            }
+            document_name = {
+                "prompt": answer["name"].lower(),
+                "response": answer
+            }
+            collection.insert_many([document_prompt, document_name])
+    except KeyError:
+        return jsonify({"error": "Missing 'name' in response"}), 500
+
+    return jsonify(answer)
 
 # # **Run the Application**
 # if __name__ == '__main__':
