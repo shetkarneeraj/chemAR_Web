@@ -536,11 +536,78 @@ def model():
 
     return jsonify(answer)
 
-# # **Run the Application**
-# if __name__ == '__main__':
-#     # Uncomment the following line to create indexes once, then comment it back out
-#     # create_indexes()
-#     app.run(debug=True, use_reloader=True, ssl_context=("cert.pem", "key.pem"), host="0.0.0.0", port=8000)
+
+@app.route('/api/process_query', methods=['POST'])
+def process_query():
+    """Process query with context for non-iOS 26 clients."""
+    # Get the JSON payload
+    prompt = request.json
+    if not prompt or prompt.get("code") != "chemar2602":
+        return jsonify({"error": "Invalid code"}), 403
+    if not prompt.get("text"):
+        return jsonify({"error": "Query is required"}), 400
+
+    query = prompt.get("text")
+    user_context = prompt.get("context", "")
+
+    try:
+        # Convert query to vector embedding
+        query_embedding = embedding_model.encode(query).tolist()
+        
+        # Access MongoDB collection
+        collection = db["docs"]
+        
+        # Vector search pipeline
+        pipeline = [
+            {
+                "$vectorSearch": {
+                    "index": "vector_index",
+                    "path": "embedding",
+                    "queryVector": query_embedding,
+                    "numCandidates": 100,
+                    "limit": 5
+                }
+            },
+            {
+                "$project": {
+                    "text": 1,
+                    "_id": 0
+                }
+            }
+        ]
+        
+        # Execute the pipeline
+        similar_docs = list(collection.aggregate(pipeline))
+        
+        # Concatenate all document texts
+        db_context = "".join(doc['text'] for doc in similar_docs)
+
+        # Combine query and context
+        full_query = f"Query: {query}\n\nUser Context: {user_context}\n\nDatabase Context: {db_context}"
+        
+        # Use existing generate function for processing
+        response = generate(full_query)
+        if response is None:
+            return jsonify({"error": "Failed to process query"}), 500
+
+        # Parse the response
+        try:
+            answer = safe_json_extract(response)
+            if isinstance(answer, str):
+                answer = json.loads(answer)
+            elif answer is None:
+                answer = json.loads(response)
+        except (json.JSONDecodeError, TypeError):
+            return jsonify({"error": "Invalid JSON response from generate"}), 500
+
+        # Validate response
+        if not isinstance(answer, dict):
+            return jsonify({"error": "Invalid data format from generate"}), 500
+
+        return jsonify(answer)
+    except Exception as e:
+        return jsonify({"error": f"Failed to process query: {str(e)}"}), 500
+    
 
 if __name__ == '__main__':
    app.run(host="0.0.0.0", port=8000)
