@@ -36,12 +36,25 @@ import datetime
 import uuid
 from google import genai
 from google.genai import types
-# LangChain and LangSmith imports
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langsmith import Client as LangSmithClient
-import langsmith
+
+# Optional LangChain and LangSmith imports - will fallback to direct Gemini if not available
+try:
+    from langchain_google_genai import ChatGoogleGenerativeAI
+    from langchain_core.prompts import ChatPromptTemplate
+    from langchain_core.output_parsers import StrOutputParser
+    from langsmith import Client as LangSmithClient
+    import langsmith
+    LANGCHAIN_AVAILABLE = True
+except ImportError as e:
+    print(f"LangChain not available: {e}")
+    print("Falling back to direct Gemini API calls")
+    LANGCHAIN_AVAILABLE = False
+    # Set dummy variables to prevent NameError
+    ChatGoogleGenerativeAI = None
+    ChatPromptTemplate = None
+    StrOutputParser = None
+    LangSmithClient = None
+    langsmith = None
 
 # **Initialize Flask App**
 app = Flask(__name__)
@@ -338,29 +351,72 @@ for each axis.
 
 def generate_with_langchain_gemini(description: str, context: str = "", image_base64: Optional[str] = None) -> str:
     """Generate text using LangChain's Gemini integration with LangSmith tracing enabled."""
-    # Set up LangSmith tracing
-    langsmith_client = LangSmithClient(
-        api_key=os.getenv("LANGSMITH_API_KEY", "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"),
-        api_url=os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"),
-    )
-    os.environ["LANGSMITH_TRACING"] = "true"
-    os.environ["LANGSMITH_PROJECT"] = os.getenv("LANGSMITH_PROJECT", "chemAR")
-    os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "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")
-    os.environ["LANGSMITH_ENDPOINT"] = os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com")
+    if not LANGCHAIN_AVAILABLE:
+        print("LangChain not available, falling back to direct Gemini API")
+        return generate_direct_gemini(description, context, image_base64)
+    
+    try:
+        # Set up LangSmith tracing
+        langsmith_client = LangSmithClient(
+            api_key=os.getenv("LANGSMITH_API_KEY", "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"),
+            api_url=os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"),
+        )
+        os.environ["LANGSMITH_TRACING"] = "true"
+        os.environ["LANGSMITH_PROJECT"] = os.getenv("LANGSMITH_PROJECT", "chemAR")
+        os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "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")
+        os.environ["LANGSMITH_ENDPOINT"] = os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com")
 
-    # Gemini API key
-    gemini_api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ")
-    # Compose prompt
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", system_message),
-        ("user", f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description.")
-    ])
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key=gemini_api_key)
-    output_parser = StrOutputParser()
-    chain = prompt | model | output_parser
-    # Run the chain with tracing
-    result = chain.invoke({"context": context, "question": description})
-    return result
+        # Gemini API key
+        gemini_api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ")
+        # Compose prompt
+        prompt = ChatPromptTemplate.from_messages([
+            ("system", system_message),
+            ("user", f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description.")
+        ])
+        model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=gemini_api_key)
+        output_parser = StrOutputParser()
+        chain = prompt | model | output_parser
+        # Run the chain with tracing
+        result = chain.invoke({"context": context, "question": description})
+        return result
+    except Exception as e:
+        print(f"LangChain integration failed: {e}")
+        print("Falling back to direct Gemini API")
+        return generate_direct_gemini(description, context, image_base64)
+
+def generate_direct_gemini(description: str, context: str = "", image_base64: Optional[str] = None) -> str:
+    """Direct Gemini API call without LangChain."""
+    answer = ""
+    client = genai.Client(
+        api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ"),
+    )
+
+    model = "gemini-2.0-flash"
+    text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                types.Part.from_text(text=system_message+text_part),
+            ],
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        temperature=2.0,
+        top_p=0.95,
+        top_k=40,
+        max_output_tokens=16834,
+        response_mime_type="application/json",
+    )
+
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        chunk_text = chunk.text if chunk.text is not None else ""
+        answer += chunk_text
+    return answer
 
 def generate(description: str, image_base64: Optional[str] = None, use_langchain_tracing: bool = False) -> str:
     # Convert the description into a vector embedding
@@ -397,70 +453,11 @@ def generate(description: str, image_base64: Optional[str] = None, use_langchain
     for doc in similar_docs:
         context += f"Similar Document: {doc['text']}\nSimilarity Score: {doc['score']}\n\n"
     
-    # # Prepare user content based on whether an image is provided
-    # if image_base64:
-    #     text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
-    #     user_content = [
-    #         {"type": "text", "text": text_part},
-    #         {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}}
-    #     ]
-    # else:
-    #     text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description."
-    #     user_content = [{"type": "text", "text": text_part}]
-    
-    # # Construct the message for the OpenAI API
-    # messages = [
-    #     {"role": "system", "content": [{"type": "text", "text": system_message}]},
-    #     {"role": "user", "content": user_content}
-    # ]
-
-    # # Call the OpenAI API
-    # completion = openai_client.chat.completions.create(  
-    #     model=deployment,
-    #     messages=messages,
-    #     max_completion_tokens=40000,
-    #     stop=None,  
-    #     stream=False
-    # )
-    # # Return the response content
-    # return completion.to_json()
-
-    # Use LangChain+LangSmith tracing if enabled
-    if use_langchain_tracing:
+    # Use LangChain+LangSmith tracing if enabled and available
+    if use_langchain_tracing and LANGCHAIN_AVAILABLE:
         return generate_with_langchain_gemini(description, context, image_base64)
     # Otherwise, use direct Gemini API
-    answer = ""
-
-    client = genai.Client(
-        api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ"),
-    )
-
-    model = "gemini-2.0-flash"
-    text_part = f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided image and description."
-    contents = [
-        types.Content(
-            role="user",
-            parts=[
-                types.Part.from_text(text=system_message+text_part),
-            ],
-        ),
-    ]
-    generate_content_config = types.GenerateContentConfig(
-        temperature=2.0,
-        top_p=0.95,
-        top_k=40,
-        max_output_tokens=16834,
-        response_mime_type="application/json",
-    )
-
-    for chunk in client.models.generate_content_stream(
-        model=model,
-        contents=contents,
-        config=generate_content_config,
-    ):
-        chunk_text = chunk.text if chunk.text is not None else ""
-        answer += chunk_text
-    return answer
+    return generate_direct_gemini(description, context, image_base64)
 
 # **Get Compound Data Function**
 def get_compound_data(description: str, image_base64: Optional[str] = None) -> Optional[str]:
