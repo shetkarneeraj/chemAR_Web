@@ -1,3 +1,18 @@
+#!/usr/bin/env python3
+"""
+chemAR Web Application
+
+To enable LangSmith tracing for Gemini LLM calls, set these environment variables:
+
+export LANGSMITH_TRACING=true
+export LANGSMITH_API_KEY="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"
+export LANGSMITH_ENDPOINT="https://api.smith.langchain.com"
+export LANGSMITH_PROJECT="chemAR"
+export GEMINI_API_KEY="AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ"
+
+Then run: python3 app.py
+"""
+
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField
@@ -21,6 +36,12 @@ import datetime
 import uuid
 from google import genai
 from google.genai import types
+# LangChain and LangSmith imports
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langsmith import Client as LangSmithClient
+import langsmith
 
 # **Initialize Flask App**
 app = Flask(__name__)
@@ -212,7 +233,7 @@ def index():
     return render_template('index.html', form=ContactForm())
 
 # **JSON Extraction Function**
-def safe_json_extract(response: str) -> Optional[Dict]:
+def safe_json_extract(response: str) -> Optional[str]:
     """Extract JSON from the model response safely."""
     try:
         json_match = re.search(r'```json(.*?)```', response, re.DOTALL) or re.search(r'```(.*?)```', response, re.DOTALL)
@@ -248,6 +269,16 @@ Analyze the provided chemical compound description and image (if available), and
   "properties": "Brief chemical description",
   "description": "Detailed description of the compound, how it's synthesized, and its uses",
   "formula": "Molecular formula",
+  "molecular weight": {
+    "total": 100.0,
+    "elements": {
+      "2 x C": 24,
+      "10 x H": 10,
+      "2 x O": 32,
+      "4 x N": 56,
+      ...
+    }
+  }
   "atoms": {
     "C1": {
       "element": "C",
@@ -305,7 +336,33 @@ for each axis.
 11. Bond Length Scaling: The bond lengths must be scaled between 0 to 0.6 proportionally so that the entire model can be viewed on screen.
 """
 
-def generate(description: str, image_base64: Optional[str] = None) -> str:
+def generate_with_langchain_gemini(description: str, context: str = "", image_base64: Optional[str] = None) -> str:
+    """Generate text using LangChain's Gemini integration with LangSmith tracing enabled."""
+    # Set up LangSmith tracing
+    langsmith_client = LangSmithClient(
+        api_key=os.getenv("LANGSMITH_API_KEY", "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"),
+        api_url=os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com"),
+    )
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGSMITH_PROJECT"] = os.getenv("LANGSMITH_PROJECT", "chemAR")
+    os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "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")
+    os.environ["LANGSMITH_ENDPOINT"] = os.getenv("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com")
+
+    # Gemini API key
+    gemini_api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ")
+    # Compose prompt
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", system_message),
+        ("user", f"Context from database:\n{context}\n\nProvided description: {description}\n\nAnalyze the chemical compound based on the provided description.")
+    ])
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key=gemini_api_key)
+    output_parser = StrOutputParser()
+    chain = prompt | model | output_parser
+    # Run the chain with tracing
+    result = chain.invoke({"context": context, "question": description})
+    return result
+
+def generate(description: str, image_base64: Optional[str] = None, use_langchain_tracing: bool = False) -> str:
     # Convert the description into a vector embedding
     query_embedding = embedding_model.encode(description).tolist()
     
@@ -368,10 +425,14 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
     # # Return the response content
     # return completion.to_json()
 
+    # Use LangChain+LangSmith tracing if enabled
+    if use_langchain_tracing:
+        return generate_with_langchain_gemini(description, context, image_base64)
+    # Otherwise, use direct Gemini API
     answer = ""
 
     client = genai.Client(
-        api_key = "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ",
+        api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAeBdmZ9yE20s6Ub6m3ZSWg3dcxrCblsWQ"),
     )
 
     model = "gemini-2.0-flash"
@@ -397,14 +458,16 @@ def generate(description: str, image_base64: Optional[str] = None) -> str:
         contents=contents,
         config=generate_content_config,
     ):
-        answer += chunk.text + ""
+        chunk_text = chunk.text if chunk.text is not None else ""
+        answer += chunk_text
     return answer
 
 # **Get Compound Data Function**
 def get_compound_data(description: str, image_base64: Optional[str] = None) -> Optional[str]:
     """Process description and optional image to get compound data."""
     try:
-        response = generate(description, image_base64)
+        use_tracing = os.getenv("LANGSMITH_TRACING", "false").lower() == "true"
+        response = generate(description, image_base64, use_langchain_tracing=use_tracing)
         return response
     except Exception as e:
         print(f"Error: {str(e)}")
