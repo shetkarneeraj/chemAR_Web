@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload PDF</title>
+</head>
+<body>
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Show form if token is valid, otherwise show error -->
+    {% if valid %}
+        <h1>Upload PDF</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="token" value="{{ token }}">
+            <input type="file" name="file" accept=".pdf">
+            <input type="submit" value="Upload PDF">
+        </form>
+    {% else %}
+        <p>Invalid or expired link. Please use the link provided in the email.</p>
+    {% endif %}
+</body>
+</html>

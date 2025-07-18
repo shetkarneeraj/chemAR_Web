@@ -10,20 +10,344 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <title>chemAR: Augmented Reality Chemistry Learning</title>
+  
+  <!-- Liquid Glass Design CSS -->
   <style>
+    @import url('https://unpkg.com/normalize.css') layer(normalize);
+    @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+
+    @layer normalize, base, demo;
+
+    @layer base {
+      :root {
+        --font-size-min: 16;
+        --font-size-max: 20;
+        --font-ratio-min: 1.2;
+        --font-ratio-max: 1.33;
+        --font-width-min: 375;
+        --font-width-max: 1500;
+        --glass-background: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-shadow: 0px 4px 16px rgba(17, 17, 26, 0.05), 
+                       0px 8px 24px rgba(17, 17, 26, 0.05),
+                       0px 16px 56px rgba(17, 17, 26, 0.05);
+      }
+
+      html {
+        color-scheme: dark;
+      }
+
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e  50%, #0f3460 75%, #0c0c0c 100%);
+        overflow-x: hidden;
+        min-height: 100vh;
+        font-family: 'SF Pro Text', 'SF Pro Icons', 'AOS Icons', 'Helvetica Neue',
+          Helvetica, Arial, sans-serif, system-ui;
+        position: relative;
+      }
+
+      /* Animated Background */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          -45deg,
+          #0c0c0c,
+          #1a1a2e,
+          #16213e,
+          #0f3460,
+          #1e3a8a,
+          #312e81,
+          #1e1b4b,
+          #0c0c0c
+        );
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        z-index: -2;
+      }
+
+      /* Grid Pattern Overlay */
+      body::after {
+        --size: 45px;
+        --line: color-mix(in hsl, #6366f1, transparent 85%);
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+              90deg,
+              var(--line) 1px,
+              transparent 1px var(--size)
+            )
+            calc(var(--size) * 0.36) 50% / var(--size) var(--size),
+          linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0%
+            calc(var(--size) * 0.32) / var(--size) var(--size);
+        mask: linear-gradient(-20deg, transparent 50%, white);
+        opacity: 0.3;
+        animation: gridFloat 20s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 100% 50%;
+        }
+        50% {
+          background-position: 100% 100%;
+        }
+        75% {
+          background-position: 0% 100%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes gridFloat {
+        0%, 100% {
+          transform: translateY(0px) translateX(0px);
+          opacity: 0.3;
+        }
+        25% {
+          transform: translateY(-10px) translateX(5px);
+          opacity: 0.4;
+        }
+        50% {
+          transform: translateY(-5px) translateX(-3px);
+          opacity: 0.2;
+        }
+        75% {
+          transform: translateY(-15px) translateX(8px);
+          opacity: 0.35;
+        }
+      }
+
+      /* Floating Particles */
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.6) 0%, transparent 70%);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .particle:nth-child(1) {
+        width: 4px;
+        height: 4px;
+        top: 20%;
+        left: 20%;
+        animation-delay: 0s;
+        animation-duration: 8s;
+      }
+
+      .particle:nth-child(2) {
+        width: 6px;
+        height: 6px;
+        top: 40%;
+        left: 80%;
+        animation-delay: 2s;
+        animation-duration: 10s;
+      }
+
+      .particle:nth-child(3) {
+        width: 3px;
+        height: 3px;
+        top: 60%;
+        left: 30%;
+        animation-delay: 4s;
+        animation-duration: 7s;
+      }
+
+      .particle:nth-child(4) {
+        width: 5px;
+        height: 5px;
+        top: 80%;
+        left: 70%;
+        animation-delay: 1s;
+        animation-duration: 9s;
+      }
+
+      .particle:nth-child(5) {
+        width: 4px;
+        height: 4px;
+        top: 10%;
+        left: 60%;
+        animation-delay: 3s;
+        animation-duration: 6s;
+      }
+
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0px) translateX(0px) scale(1);
+          opacity: 0.3;
+        }
+        25% {
+          transform: translateY(-20px) translateX(10px) scale(1.1);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateY(-40px) translateX(-5px) scale(0.9);
+          opacity: 0.4;
+        }
+        75% {
+          transform: translateY(-30px) translateX(15px) scale(1.05);
+          opacity: 0.7;
+        }
+      }
+    }
+
+    @layer demo {
+      /* Seamless Section Transitions */
+      section {
+        position: relative;
+        background: transparent !important;
+        transition: all 1.5s ease-in-out;
+      }
+
+      /* Remove harsh section boundaries */
+      section:not(:first-child)::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(0, 0, 0, 0.1) 50%,
+          transparent 100%
+        );
+        z-index: 1;
+      }
+
+      .glass-effect {
+        background: var(--glass-background);
+        backdrop-filter: blur(12px) saturate(1.8) brightness(1.1);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow),
+                    0 0 2px 1px rgba(99, 102, 241, 0.15) inset,
+                    0 0 10px 4px rgba(99, 102, 241, 0.1) inset;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px) saturate(1.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0px 4px 16px rgba(17, 17, 26, 0.1),
+                    0px 8px 24px rgba(17, 17, 26, 0.08),
+                    0 0 2px 1px rgba(99, 102, 241, 0.1) inset;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .glass-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0px 8px 24px rgba(17, 17, 26, 0.15),
+                    0px 16px 40px rgba(17, 17, 26, 0.1),
+                    0 0 4px 2px rgba(99, 102, 241, 0.2) inset;
+        transform: translateY(-2px);
+      }
+
+      .floating-navbar {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(16px) saturate(1.8) brightness(1.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0px 4px 24px rgba(17, 17, 26, 0.1),
+                    0 0 2px 1px rgba(99, 102, 241, 0.15) inset;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .feature-glass {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(8px) saturate(1.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .feature-glass:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(99, 102, 241, 0.2);
+        transform: translateY(-4px) scale(1.02);
+      }
+
+      .sdk-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(6px) saturate(1.2);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+      }
+
+      .sdk-card:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(99, 102, 241, 0.25);
+        transform: translateY(-3px);
+      }
+    }
+
     .floating-navbar {
       backdrop-filter: blur(10px);
       background: rgba(0, 0, 0, 0.6);
       transition: all 0.4s ease-in-out;
     }
-    section {
-      transition: background 1.5s ease-in-out;
+
+    /* SVG Filter for advanced effects */
+    .displacement-filter {
+      filter: url(#displacementFilter);
     }
   </style>
+
+  <!-- SVG Filters for Liquid Glass Effects -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <filter id="displacementFilter" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blur"/>
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"/>
+        <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+      </filter>
+    </defs>
+  </svg>
 </head>
-<body class="bg-gray-900 text-white font-sans overflow-x-hidden">
+<body class="text-white font-sans overflow-x-hidden">
+  <!-- Floating Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
   <!-- Floating Navbar -->
-    <!-- Floating Navbar -->
   <header class="floating-navbar fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-4xl py-3 px-6 flex justify-between items-center rounded-full shadow-xl">
     <div class="flex items-center space-x-2">
       <img src="/static/molecule.png" alt="chemAR Logo" class="w-8 h-8">
@@ -37,6 +361,13 @@
       <a href="#faq" class="text-gray-300 hover:text-indigo-400 transition-colors">FAQs</a>
       <!-- Privacy Policy link -->
       <a href="#privacy" id="privacy-modal-btn" class="text-gray-300 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+      <!-- ARAnchor Tag Download Link -->
+      <a href="/static/ARAnchor.png" download="ARAnchor.png" class="text-gray-300 hover:text-indigo-400 transition-colors flex items-center space-x-1">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>AR Tag</span>
+      </a>
     </nav>
     <div class="md:hidden">
       <button id="mobile-menu-button" class="text-gray-300 hover:text-indigo-400 transition-colors">
@@ -47,13 +378,21 @@
     </div>
   </header>
   
-  <div id="mobile-menu" class="hidden md:hidden fixed top-16 left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl bg-gray-900 bg-opacity-80 text-white py-4 rounded-lg shadow-lg">
+  <div id="mobile-menu" class="hidden md:hidden fixed top-16 left-1/2 transform -translate-x-1/2 w-[90%] max-w-4xl glass-effect text-white py-4 rounded-lg shadow-lg">
     <a href="#why-chemar" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">About</a>
     <a href="#features" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">Features</a>
     <a href="#contact-form" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">Contact us</a>
     <a href="#instructions" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">Instructions</a>
     <a href="#faq" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">FAQs</a>
     <a href="#privacy" id="privacy-modal-btn-mobile" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+    <a href="/static/ARAnchor.png" download="ARAnchor.png" class="block px-4 py-2 text-gray-300 hover:text-indigo-400 transition-colors">
+      <div class="flex items-center space-x-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>AR Tag</span>
+      </div>
+    </a>
   </div>
 
   <!-- Flash Messages -->
@@ -74,7 +413,7 @@
 
       messages.forEach(({ category, message }) => {
         const flashMessage = document.createElement('div');
-        flashMessage.className = `bg-${category}-500 text-white p-4 rounded-lg shadow-lg transform transition-transform translate-x-full`;
+        flashMessage.className = `glass-card text-white p-4 rounded-lg shadow-lg transform transition-transform translate-x-full`;
         flashMessage.innerText = message;
         flashMessages.appendChild(flashMessage);
 
@@ -92,7 +431,7 @@
     });
   </script>
 
-<section class="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-gray-800 via-gray-900 to-black">
+<section class="h-screen flex flex-col justify-center items-center text-center relative">
   <p class="mt-4 text-gray-300" data-aos="fade-up">
     Test the latest versions!  
     <a href="https://testflight.apple.com/join/aEEj1TQW" class="text-indigo-400 hover:underline">Try on TestFlight</a>
@@ -103,7 +442,7 @@
   </h1>
   
   <p class="text-lg text-gray-300 mt-4 max-w-lg mx-auto" data-aos="fade-up">
-    An immersive learning experience with augmented reality, interactive visualizations, and quizzes.
+    An immersive learning experience with augmented reality, interactive visualizations, and AI-powered insights.
   </p>
   
   <a href="https://apps.apple.com/in/app/chemar/id6741715736">
@@ -112,35 +451,35 @@
 </section>
 
   <!-- Why chemAR Section -->
-  <section id="why-chemar" class="py-20 px-6 bg-gray-800">
+  <section id="why-chemar" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Why Choose chemAR?</h2>
         <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Transform the Way You Learn Chemistry</p>
-        <p class="mt-6 text-lg leading-8 text-gray-300">chemAR offers an innovative, engaging, and interactive way to explore the periodic table, chemical reactions, and molecular structures.</p>
+        <p class="mt-6 text-lg leading-8 text-gray-300">chemAR offers an innovative, engaging, and interactive way to explore the periodic table, chemical reactions, and molecular structures with cutting-edge AR technology.</p>
       </div>
       <div class="mt-10 grid max-w-4xl mx-auto grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up">
           <img src="/static/vr-glasses.png" alt="AR Learning" class="w-12 h-12">
           <p class="text-white">Immersive Augmented Reality for better conceptual understanding.</p>
         </div>
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up" data-aos-delay="100">
           <img src="/static/joystick.png" alt="Interactive Quizzes" class="w-12 h-12">
           <p class="text-white">Gamified learning experience with engaging quizzes.</p>
         </div>
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up" data-aos-delay="200">
           <img src="/static/no-signal.png" alt="Offline Access" class="w-12 h-12">
           <p class="text-white">Access content anytime, anywhere – even without the internet.</p>
         </div>
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="300">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up" data-aos-delay="300">
           <img src="/static/particles.png" alt="Molecular Structures" class="w-12 h-12">
           <p class="text-white">3D molecular structures for hands-on learning.</p>
         </div>
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="400">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up" data-aos-delay="400">
           <img src="/static/accessability.png" alt="Inclusive Design" class="w-12 h-12">
           <p class="text-white">Designed for all learners with accessibility in mind.</p>
         </div>
-        <div class="flex items-center space-x-4 p-6 bg-gray-900 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="500">
+        <div class="glass-card flex items-center space-x-4 p-6 shadow-lg" data-aos="fade-up" data-aos-delay="500">
           <img src="/static/chemistry.png" alt="Virtual Labs" class="w-12 h-12">
           <p class="text-white">Explore virtual experiments and simulations.</p>
         </div>
@@ -149,49 +488,67 @@
   </section>
 
   <!-- Features Section -->
-  <section id="features" class="py-20 px-6 bg-gradient-to-b from-gray-900 to-black">
+  <section id="features" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
-        <h2 class="text-base font-semibold leading-7 text-indigo-600">Find Relief</h2>
+        <h2 class="text-base font-semibold leading-7 text-indigo-600">Advanced Features</h2>
         <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Features</p>
       </div>
       <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
         <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
-          <div class="relative pl-16">
+          <div class="feature-glass relative pl-16 p-6">
             <dt class="text-base font-semibold leading-7 text-white">
-              <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                 <img src="/static/ar_logo.svg" class="h-6 w-6 text-white" aria-hidden="true">
               </div>
-              Augmented Reality Learning
+              Annotate in AR
             </dt>
-            <dd class="mt-2 text-base leading-7 text-gray-300">Experience immersive AR visualizations of chemical elements and molecular structures.</dd>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Add interactive annotations and labels directly in your AR environment for enhanced learning and collaboration.</dd>
           </div>
-          <div class="relative pl-16">
+          <div class="feature-glass relative pl-16 p-6">
             <dt class="text-base font-semibold leading-7 text-white">
-              <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                 <img src="/static/gemini.png" class="h-6 w-6 text-white" aria-hidden="true">
               </div>
-              AI Features
+              AI-Powered with Gemini
             </dt>
-            <dd class="mt-2 text-base leading-7 text-gray-300">Generate molecule structures in AR with Gemini 2.0</dd>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Generate molecule structures and get intelligent insights powered by Google's Gemini AI, with offline RAG capabilities.</dd>
           </div>
-          <div class="relative pl-16">
+          <div class="feature-glass relative pl-16 p-6">
             <dt class="text-base font-semibold leading-7 text-white">
-              <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                <img src="/static/sdks/airdrop.png" class="h-6 w-6 text-white" aria-hidden="true">
+              </div>
+              Share via AirDrop
+            </dt>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Instantly share your molecular models and AR sessions with classmates using Apple's AirDrop technology.</dd>
+          </div>
+          <div class="feature-glass relative pl-16 p-6">
+            <dt class="text-base font-semibold leading-7 text-white">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                <img src="/static/icloud.png" class="h-6 w-6 text-white" aria-hidden="true">
+              </div>
+              Sync with Cloud
+            </dt>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Seamlessly sync your progress, annotations, and custom molecules across all your devices with CloudKit integration.</dd>
+          </div>
+          <div class="feature-glass relative pl-16 p-6">
+            <dt class="text-base font-semibold leading-7 text-white">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                 <img src="/static/electrons.png" class="h-6 w-6 text-white" aria-hidden="true">
               </div>
               3D Atomic Shells
             </dt>
-            <dd class="mt-2 text-base leading-7 text-gray-300">Visualize electron configurations and atomic structures in 3D.</dd>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Visualize electron configurations and atomic structures in 3D with interactive orbital representations.</dd>
           </div>
-          <div class="relative pl-16">
+          <div class="feature-glass relative pl-16 p-6">
             <dt class="text-base font-semibold leading-7 text-white">
-              <div class="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+              <div class="absolute left-6 top-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                 <img src="/static/choose.png" class="h-6 w-6 text-white" aria-hidden="true">
               </div>
               Interactive Quizzes
             </dt>
-            <dd class="mt-2 text-base leading-7 text-gray-300">Test your knowledge with a 60-second chemistry quiz and track your progress.</dd>
+            <dd class="mt-2 text-base leading-7 text-gray-300">Test your knowledge with a 60-second chemistry quiz and track your progress with intelligent adaptive learning.</dd>
           </div>
         </dl>
       </div>
@@ -199,45 +556,58 @@
   </section>
 
   <!-- Technologies Section -->
-  <section id="technologies" class="py-20 px-6 bg-gray-800">
+  <section id="technologies" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Technologies Used</h2>
-        <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Apple SDKs</p>
-        <p class="mt-6 text-lg leading-8 text-gray-300">Using the best of Apple SDKs to bring your learning experience to life.</p>
+        <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Apple SDKs & Technologies</p>
+        <p class="mt-6 text-lg leading-8 text-gray-300">Using the best of Apple's ecosystem to bring your learning experience to life.</p>
       </div>
       <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/swift-96x96_2x.png" alt="Swift" class="mx-auto h-24">
           <a href="https://developer.apple.com/swift/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Swift</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/swiftui-96x96_2x.png" alt="SwiftUI" class="mx-auto h-24">
           <a href="https://developer.apple.com/xcode/swiftui/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">SwiftUI</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/swiftdata-96x96_2x.png" alt="SwiftData" class="mx-auto h-24">
           <a href="https://developer.apple.com/xcode/swiftdata/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">SwiftData</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/arkit-96x96_2x.png" alt="ARKit" class="mx-auto h-24">
           <a href="https://developer.apple.com/augmented-reality/arkit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">ARKit</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/realitykit-96x96_2x.png" alt="RealityKit" class="mx-auto h-24">
           <a href="https://developer.apple.com/augmented-reality/realitykit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">RealityKit</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/scenekit-128x128_2x.png" alt="SceneKit" class="mx-auto h-24">
           <a href="https://developer.apple.com/scenekit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">SceneKit</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="sdk-card flex flex-col items-center p-4">
           <img src="/static/sdks/tipkit-96x96_2x.png" alt="TipKit" class="mx-auto h-24">
           <a href="https://developer.apple.com/tipkit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">TipKit</a>
         </div>
-        <div class="flex flex-col items-center">
-          <img src="/static/sdks/widgetkit-96x96_2x.png" alt="SiriKit" class="mx-auto h-24">
-          <a href="https://developer.apple.com/siri/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">WidgetKit</a>
+        <div class="sdk-card flex flex-col items-center p-4">
+          <img src="/static/sdks/widgetkit-96x96_2x.png" alt="WidgetKit" class="mx-auto h-24">
+          <a href="https://developer.apple.com/documentation/widgetkit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">WidgetKit</a>
+        </div>
+        <!-- New Apple SDKs -->
+        <div class="sdk-card flex flex-col items-center p-4">
+          <img src="/static/sdks/cloudkit.png" alt="WidgetKit" class="mx-auto h-24">
+          <a href="https://developer.apple.com/icloud/cloudkit/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">CloudKit</a>
+        </div>
+        <div class="sdk-card flex flex-col items-center p-4">
+          <img src="/static/sdks/foundation_models.png" alt="Foundation models" class="mx-auto h-24">
+          <a href="https://developer.apple.com/machine-learning/" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Foundation Models</a>
+        </div>
+        <div class="sdk-card flex flex-col items-center p-4">
+          <img src="/static/sdks/airdrop.png" alt="Airdrop" class="mx-auto h-24">
+          <a href="https://developer.apple.com/documentation/foundation/nsuseractivity" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">AirDrop</a>
         </div>
       </div>
     </div>
@@ -252,11 +622,12 @@
       <div>
         <div class="text-center mb-6">
         <h3 class="text-2xl font-bold tracking-tight text-white">Large Language Models</h3>
-        <p class="mt-2 text-gray-300">Used for generating 3D molecular structures</p>
+        <p class="mt-2 text-gray-300">Powered by Google's advanced AI for generating 3D molecular structures</p>
         </div>
-        <div class="flex flex-col items-center">
-        <img src="/static/gemini.png" alt="ChatGPT" class="mx-auto h-24">
+        <div class="glass-card flex flex-col items-center p-6">
+        <img src="/static/gemini.png" alt="Google Gemini" class="mx-auto h-24">
         <a href="https://gemini.google.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Google Gemini 2.0</a>
+        <p class="mt-2 text-xs text-gray-400 text-center">Advanced AI with offline RAG capabilities</p>
         </div>
       </div>
       
@@ -264,14 +635,14 @@
       <div>
         <div class="text-center mb-6">
         <h3 class="text-2xl font-bold tracking-tight text-white">Cloud Services</h3>
-        <p class="mt-2 text-gray-300">Infrastructure and AI capabilities</p>
+        <p class="mt-2 text-gray-300">Infrastructure and data capabilities</p>
         </div>
         <div class="grid grid-cols-2 gap-8">
-        <div class="flex flex-col items-center">
+        <div class="glass-card flex flex-col items-center p-4">
           <img src="/static/azure.svg" alt="Microsoft Azure" class="mx-auto h-24">
           <a href="https://azure.microsoft.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">Microsoft Azure</a>
         </div>
-        <div class="flex flex-col items-center">
+        <div class="glass-card flex flex-col items-center p-4">
           <img src="/static/mongo.png" alt="MongoDB" class="mx-auto h-24">
           <a href="https://www.mongodb.com" target="_blank" class="mt-2 text-center text-sm font-medium text-gray-300">MongoDB</a>
         </div>
@@ -282,22 +653,22 @@
   </section>
 
   <!-- Demo Video Section -->
-  <section id="demo-video" class="py-20 px-6 bg-gray-900">
+  <section id="demo-video" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Watch Our Demo</h2>
         <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">See chemAR in Action</p>
       </div>
       <div class="mt-10 flex justify-center">
-        <div class="w-full max-w-4xl" style="height: 500px;">
-          <iframe class="w-full h-full rounded-lg shadow-lg" src="https://www.youtube.com/embed/rcDrbISFj2E" frameborder="0"
+        <div class="w-full max-w-4xl glass-card p-4" style="height: 520px;">
+          <iframe class="w-full h-full rounded-lg shadow-lg" src="https://www.youtube.com/embed/cBlpmzAD26c" frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="instructions" class="relative isolate overflow-hidden bg-gradient-to-l from-black to-gray-900 px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+  <section id="instructions" class="relative isolate overflow-hidden px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
     <div class="absolute inset-0 -z-10 overflow-hidden">
       <svg class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-700 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
         <defs>
@@ -314,7 +685,9 @@
     <div class="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2 lg:items-center">
       <!-- Image on the Left (shifted left so that half is off-screen) -->
       <div class="order-1 flex justify-center lg:justify-start lg:-translate-x-1/2">
-        <img class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" src="/static/ARViewLab.jpeg" alt="Instructions Illustration">
+        <div class="glass-card p-4">
+          <img class="w-[48rem] max-w-none rounded-xl shadow-xl sm:w-[57rem]" src="/static/ARViewLab.jpeg" alt="Instructions Illustration">
+        </div>
       </div>
       <!-- Text on the Right -->
       <div class="order-2 mt-12 lg:mt-0 lg:pr-12">
@@ -342,6 +715,15 @@
         <p>
           <strong class="text-white">Annotate in AR:</strong> Use the annotation tool to add notes and labels directly in the AR view for better understanding and reference.
         </p>
+        <p>
+          <strong class="text-white">Share via AirDrop:</strong> Instantly share your molecular models and AR sessions with classmates using Apple's AirDrop technology.
+        </p>
+        <p>
+          <strong class="text-white">Sync with Cloud:</strong> Your progress, annotations, and custom molecules are automatically synced across all your devices using CloudKit.
+        </p>
+        <p>
+          <strong class="text-white">ARG-powered Chatbot:</strong> Access our advanced chatbot that works completely offline, or connect online to fetch context from the best chemistry books and generate content on-device.
+        </p>
         </div>
         <p class="mt-8 text-gray-300">
         You can also find these instructions in the <strong class="text-white">Instructions</strong> tab within the app.
@@ -351,7 +733,7 @@
   </section>
 
 
-  <section id="contact-form" class="py-20 px-6 bg-gray-800">
+  <section id="contact-form" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Get in Touch</h2>
@@ -359,65 +741,71 @@
       </div>
 
       <div class="mt-10">
-        <form action="{{ url_for('contact') }}" method="POST" class="space-y-6">
-          {{ form.hidden_tag() }}  <!-- CSRF Token -->
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label for="first-name" class="block text-lg font-medium text-gray-300">First Name</label>
-              {{ form.first_name(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
+        <div class="glass-card p-8">
+          <form action="{{ url_for('contact') }}" method="POST" class="space-y-6">
+            {{ form.hidden_tag() }}  <!-- CSRF Token -->
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="first-name" class="block text-lg font-medium text-gray-300">First Name</label>
+                {{ form.first_name(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
+              </div>
+              <div>
+                <label for="last-name" class="block text-lg font-medium text-gray-300">Last Name</label>
+                {{ form.last_name(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
+              </div>
             </div>
+
             <div>
-              <label for="last-name" class="block text-lg font-medium text-gray-300">Last Name</label>
-              {{ form.last_name(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
+              <label for="email" class="block text-lg font-medium text-gray-300">Email Address</label>
+              {{ form.email(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
             </div>
-          </div>
 
-          <div>
-            <label for="email" class="block text-lg font-medium text-gray-300">Email Address</label>
-            {{ form.email(class_="mt-1 block w-full h-12 text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105") }}
-          </div>
+            <div>
+              <label for="message" class="block text-lg font-medium text-gray-300">Message</label>
+              {{ form.message(class_="mt-1 block w-full text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105", rows=6) }}
+            </div>
 
-          <div>
-            <label for="message" class="block text-lg font-medium text-gray-300">Message</label>
-            {{ form.message(class_="mt-1 block w-full text-lg rounded-md bg-gray-700 border-gray-600 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition-transform transform hover:scale-105", rows=6) }}
-          </div>
-
-          <div class="text-center">
-            {{ form.submit(class_="mt-6 px-6 py-3 bg-indigo-600 rounded-full text-white font-semibold hover:bg-indigo-500 transition-transform transform hover:scale-105") }}
-          </div>
-        </form>
+            <div class="text-center">
+              {{ form.submit(class_="mt-6 px-6 py-3 bg-indigo-600 rounded-full text-white font-semibold hover:bg-indigo-500 transition-transform transform hover:scale-105") }}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="py-20 px-6 bg-gray-900">
+  <section id="faq" class="py-20 px-6 relative">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:text-center">
         <h2 class="text-base font-semibold leading-7 text-indigo-600">Frequently Asked Questions</h2>
         <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">FAQ</p>
       </div>
       <div class="mt-10 space-y-6">
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="glass-card p-6 shadow-lg">
           <h3 class="text-lg font-semibold text-white">What is chemAR?</h3>
-          <p class="mt-2 text-gray-300">chemAR is an augmented reality application designed to enhance the learning experience of chemistry through interactive visualizations and quizzes.</p>
+          <p class="mt-2 text-gray-300">chemAR is an augmented reality application designed to enhance the learning experience of chemistry through interactive visualizations, AI-powered insights, and collaborative features.</p>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="glass-card p-6 shadow-lg">
           <h3 class="text-lg font-semibold text-white">How do I use the app?</h3>
-          <p class="mt-2 text-gray-300">Simply point your device at a horizontal surface, select elements to add to the AR view, and interact with them using the provided tools and features.</p>
+          <p class="mt-2 text-gray-300">Simply point your device at a horizontal surface, select elements to add to the AR view, and interact with them using the provided tools, annotations, and sharing features.</p>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="glass-card p-6 shadow-lg">
           <h3 class="text-lg font-semibold text-white">Is chemAR free to use?</h3>
           <p class="mt-2 text-gray-300">Yes, chemAR is completely free to use with no in-app purchases or hidden fees.</p>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="glass-card p-6 shadow-lg">
           <h3 class="text-lg font-semibold text-white">Does chemAR collect any personal data?</h3>
-          <p class="mt-2 text-gray-300">No, chemAR does not collect any personal or usage data. All content and molecular models are stored locally on your device.</p>
+          <p class="mt-2 text-gray-300">No, chemAR does not collect any personal or usage data. All content and molecular models are stored locally on your device, with optional cloud sync via your personal CloudKit account.</p>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="glass-card p-6 shadow-lg">
           <h3 class="text-lg font-semibold text-white">What devices are supported?</h3>
           <p class="mt-2 text-gray-300">chemAR is designed to work on iOS devices that support ARKit. Please ensure your device is compatible with ARKit for the best experience.</p>
+        </div>
+        <div class="glass-card p-6 shadow-lg">
+          <h3 class="text-lg font-semibold text-white">Can I work offline?</h3>
+          <p class="mt-2 text-gray-300">Yes! chemAR features an ARG-powered chatbot that works completely offline. When online, it can fetch context from premium chemistry textbooks for enhanced learning.</p>
         </div>
       </div>
     </div>
@@ -425,7 +813,7 @@
 
 
 <div id="privacy-modal" class="fixed inset-0 z-50 hidden items-center justify-center modal-overlay bg-black bg-opacity-50 backdrop-blur-sm">
-  <div class="bg-gray-900 rounded-lg max-w-3xl w-full p-8 relative overflow-y-auto max-h-screen shadow-2xl border border-gray-700">
+  <div class="glass-effect max-w-3xl w-full p-8 relative overflow-y-auto max-h-screen shadow-2xl m-4">
     <!-- Close Button -->
     <button id="privacy-modal-close" class="absolute top-4 right-4 text-gray-300 hover:text-indigo-400 text-2xl transition-transform transform hover:scale-110">&times;</button>
     <div class="text-center">
@@ -447,7 +835,7 @@
       
       <h3 class="text-xl font-semibold text-white">LLM Model & AI Outputs</h3>
       <p>
-        chemAR utilizes the Gemini 2.0 LLM model to generate AI-driven responses. Users are advised that AI-generated answers
+        chemAR utilizes Google's Gemini LLM model to generate AI-driven responses. Users are advised that AI-generated answers
         may not always be accurate, and discretion is advised. The stored data is used solely for research purposes and not for any
         commercial or marketing activities.
       </p>
@@ -461,18 +849,18 @@
       <h3 class="text-xl font-semibold text-white border-b border-gray-700 pb-2">No Personal Data Collection</h3>
       <p>
         chemAR does not collect personal information or track user activities. All content, molecular models, and AR interactions
-        are stored locally on your device.
+        are stored locally on your device. Optional cloud sync uses your personal CloudKit account under your control.
       </p>
       
       <h3 class="text-xl font-semibold text-white">Camera Permissions & AR Functionality</h3>
       <p>
-        To provide an immersive augmented reality experience, chemAR requires access to your device’s camera. The camera is used only for
+        To provide an immersive augmented reality experience, chemAR requires access to your device's camera. The camera is used only for
         aligning and rendering AR elements, and no images or videos are captured, stored, or transmitted externally.
       </p>
       
       <h3 class="text-xl font-semibold text-white">Educational Purpose Only</h3>
       <p>
-        chemAR is designed exclusively for educational purposes. The app’s interactive molecular visualizations and augmented reality
+        chemAR is designed exclusively for educational purposes. The app's interactive molecular visualizations and augmented reality
         experiences are intended to support chemistry learning and comprehension.
       </p>
       
@@ -505,12 +893,14 @@
 
 
   <!-- Footer -->
-  <footer id="contact" class="py-8 text-center bg-gray-900 text-gray-400">
-    <p>&copy; 2025 chemAR. All rights reserved.</p>
-    <div class="mt-4">
-      <p class="text-gray-400">Created by Neeraj R. Shetkar</p>
-      <a href="https://www.linkedin.com/in/ineerajrajeev" target="_blank" class="text-indigo-400 hover:underline mx-2">LinkedIn</a>
-      <a href="https://github.com/ineerajrajeev" target="_blank" class="text-indigo-400 hover:underline mx-2">GitHub</a>
+  <footer id="contact" class="py-8 text-center relative text-gray-400">
+    <div class="glass-card mx-auto max-w-4xl p-6">
+      <p>&copy; 2025 chemAR. All rights reserved.</p>
+      <div class="mt-4">
+        <p class="text-gray-400">Created by Neeraj R. Shetkar</p>
+        <a href="https://www.linkedin.com/in/ineerajrajeev" target="_blank" class="text-indigo-400 hover:underline mx-2">LinkedIn</a>
+        <a href="https://github.com/ineerajrajeev" target="_blank" class="text-indigo-400 hover:underline mx-2">GitHub</a>
+      </div>
     </div>
   </footer>
 </body>
