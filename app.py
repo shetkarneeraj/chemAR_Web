@@ -8,17 +8,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json
-from openai import AzureOpenAI
-import re
-from typing import Optional, Dict
-from PyPDF2 import PdfReader
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-import os
-import io
-from sentence_transformers import SentenceTransformer
-import datetime
-import uuid
 
 # **Initialize Flask App**
 app = Flask(__name__)
